@@ -15,4 +15,3 @@ $query=mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON author
                 }
             ?>
 </table>
-
