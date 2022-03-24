@@ -6,7 +6,7 @@ $authorquery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` 
 
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="./css/myquiz.css">
+  <link rel="stylesheet" href="./css/myquiz.css"><link rel="stylesheet" href="./css/modalbox.css">
     <meta charset="UTF-8" >
     <title>Binary mode quiz</title>
 </head>
@@ -43,10 +43,27 @@ $authorquery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` 
             }
             ?>
         </div>
-
+                    <!-- Trigger/Open The Modal -->
             <button id="BtnYes" class="button yesbutton">Yes!</button>
             <button id="BtnNo" class="button nobutton">No!</button>
     </div>
+
+    <!-- The Modal of YES-->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+                <?php
+                    if($resultauthor[0]==$resultquote[0]){
+                        echo "Correct! The right answer is: "."<b>".$resultquote[1]."</b>";
+                    } else{
+                        echo "Sorry, you are wrong! The right answer is:"."<b>".$resultquote[1]."</b>";
+                    }
+                ?>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/modalbox.js"></script>
+
 
    <?php
         echo '<pre>' . print_r($resultquote, true) . '</pre>';
