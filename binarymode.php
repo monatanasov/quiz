@@ -52,23 +52,40 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
             ?>
         </div>
 
-            <button id="BtnYes" class="button yesbutton">Yes!</button>
-            <button id="BtnNo" class="button nobutton">No!</button>
+            <button id="BtnYes" class="button yesbutton" onclick="myFunction()">Yes!</button>
+            <button id="BtnNo" class="button nobutton" onclick="myFunction2()">No!</button>
     </div>
 
     <?php
-
-        if($quotesArray[$posQuery]['author_id']===$authorsArray[$posAuthor]['id']){
-            echo '<p>Correct</p>';
-        }else{
-            echo '<p>Try again!</p>';
-        }
-
-
     echo '<pre>' . print_r($quotesArray[$posQuery], true) . '</pre>';
     echo  '<pre>' . print_r($authorsArray[$posAuthor], true) . '</pre>';
     ?>
 
+    <script>
+        //create 2 js variables to store php results for additional comparison
+        let quotesResult = <?php echo(json_encode($quotesArray[$posQuery]['author_id'])); ?>;
+        let authorsResult = <?php echo(json_encode($authorsArray[$posAuthor]['id'])); ?>;
+
+        //function for comparison the YES result
+        function myFunction() {
+            if(quotesResult===authorsResult){
+                alert('Correct! The right answer is: ...');
+            }
+            else{
+                alert('Sorry, you are wrong! The right answer is: ...');
+            }
+        }
+
+        //function for comparison the NO result
+        function myFunction2() {
+            if(quotesResult!==authorsResult){
+                alert('Correct! The right answer is: ...');
+            }
+            else{
+                alert('Sorry, you are wrong! The right answer is: ...');
+            }
+        }
+    </script>
 </body>
 </html>
 
