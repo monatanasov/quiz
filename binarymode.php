@@ -63,26 +63,27 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
 
     <script>
         //create 2 js variables to store php results for additional comparison
-        let quotesResult = <?php echo(json_encode($quotesArray[$posQuery]['author_id'])); ?>;
-        let authorsResult = <?php echo(json_encode($authorsArray[$posAuthor]['id'])); ?>;
-
+        let quotesResultID = <?php echo(json_encode($quotesArray[$posQuery]['author_id'])); ?>;
+        let authorsResultID = <?php echo(json_encode($authorsArray[$posAuthor]['id'])); ?>;
+        //a variable which extracts Author-Name and show it in the alert box after
+        let authorResultName = <?php echo(json_encode($authorsArray[$posAuthor]['name'])); ?>;
         //function for comparison the YES result
         function myFunction() {
-            if(quotesResult===authorsResult){
-                alert('Correct! The right answer is: ...');
+            if(quotesResultID===authorsResultID){
+
+                alert('Correct! The right answer is: '+authorResultName);
             }
             else{
-                alert('Sorry, you are wrong! The right answer is: ...');
+                alert('Sorry, you are wrong! The right answer is: '+authorResultName);
             }
         }
-
         //function for comparison the NO result
         function myFunction2() {
-            if(quotesResult!==authorsResult){
-                alert('Correct! The right answer is: ...');
+            if(quotesResultID!==authorsResultID){
+                alert('Correct! The right answer is:' +authorResultName);
             }
             else{
-                alert('Sorry, you are wrong! The right answer is: ...');
+                alert('Sorry, you are wrong! The right answer is:' +authorResultName);
             }
         }
     </script>
