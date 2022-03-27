@@ -1,7 +1,23 @@
 <?php
 include './dbconn.php';
-$quotequery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id ORDER BY RAND() LIMIT 1 ");
-$authorquery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id ORDER BY RAND() LIMIT 1 ");
+//store all db tables in a variable
+$quotesQuery=mysqli_query($conn, "SELECT * FROM `quotes` ");
+$authorsQuery=mysqli_query($conn, "SELECT * FROM `authors` ");
+
+//loop each row of Quotes querry variable and store its data into multidimensional array
+while($row=mysqli_fetch_assoc($quotesQuery)){
+    $quotesArray[]=$row;
+}
+//get the random quote position from the array
+$posQuery=rand(0,sizeof($quotesArray)-1);
+
+//loop each row of Authors querry variable and store its data into multidimensional array
+while($row=mysqli_fetch_assoc($authorsQuery)){
+    $authorsArray[]=$row;
+}
+//get the random author position from the array
+$posAuthor=rand(0,sizeof($authorsArray)-1);
+
 ?>
 
 <html lang="en">
@@ -25,22 +41,14 @@ $authorquery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` 
         <h3>Who said it?</h3>
         <div class="binaryquote" >
             <?php
-            while($row=mysqli_fetch_assoc($quotequery)){
-                echo $row['quote'];
-                $resultquote[]=$row['author_id'];
-                $resultquote[]=$row['name'];
-                $resultquote[]=$row['quote'];
-            }
+                //print the random generated Quote
+                echo $quotesArray[$posQuery]['quote'];
             ?>
         </div>
         <div class="binaryauthor">
             <?php
-            while($row=mysqli_fetch_assoc($authorquery)){
-                echo '<h3>'.$row['name'].'</h3>';
-                $resultauthor[]=$row['aut_id'];
-                $resultauthor[]=$row['name'];
-                $resultauthor[]=$row['quote'];
-            }
+                //print the random generated Author
+                echo '<h3>'.$authorsArray[$posAuthor]['name'].'</h3>';
             ?>
         </div>
 
@@ -48,9 +56,17 @@ $authorquery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` 
             <button id="BtnNo" class="button nobutton">No!</button>
     </div>
 
-   <?php
-        echo '<pre>' . print_r($resultquote, true) . '</pre>';
-        echo '<pre>' . print_r($resultauthor, true) . '</pre>';
+    <?php
+
+        if($quotesArray[$posQuery]['author_id']===$authorsArray[$posAuthor]['id']){
+            echo '<p>Correct</p>';
+        }else{
+            echo '<p>Try again!</p>';
+        }
+
+
+    echo '<pre>' . print_r($quotesArray[$posQuery], true) . '</pre>';
+    echo  '<pre>' . print_r($authorsArray[$posAuthor], true) . '</pre>';
     ?>
 
 </body>
