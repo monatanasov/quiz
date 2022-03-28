@@ -1,6 +1,6 @@
 <?php
 include './dbconn.php';
-//store all db tables in a variable
+// store all db queries in a variable
 $quotesQuery=mysqli_query($conn, "SELECT * FROM `quotes` ");
 $authorsQuery=mysqli_query($conn, "SELECT * FROM `authors` ");
 
