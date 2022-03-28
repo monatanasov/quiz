@@ -11,7 +11,7 @@ while($row=mysqli_fetch_assoc($quotesQuery)){
 //get the random quote position from the array
 $posQuery=rand(0,sizeof($quotesArray)-1);
 
-//loop each row of Authors querry variable and store its data into multidimensional array
+//loop each row of Authors query variable and store its data into multidimensional array
 while($row=mysqli_fetch_assoc($authorsQuery)){
     $authorsArray[]=$row;
 }
