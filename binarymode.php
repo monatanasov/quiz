@@ -2,7 +2,7 @@
 include './dbconn.php';
 // store all db queries in a variable
 $quotesQuery=mysqli_query($conn, "SELECT * FROM `quotes`");
-$authorsQuery=mysqli_query($conn, "SELECT * FROM `authors` ");
+$authorsQuery=mysqli_query($conn, "SELECT * FROM `authors`");
 
 //loop each row of Quotes querry variable and store its data into multidimensional array
 while($row=mysqli_fetch_assoc($quotesQuery)){
