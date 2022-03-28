@@ -1,7 +1,23 @@
 <?php
 include './dbconn.php';
-$quotequery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id ORDER BY RAND() LIMIT 1 ");
-$authorquery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id ORDER BY RAND() LIMIT 1 ");
+// store all db queries in a variable
+$quotesQuery=mysqli_query($conn, "SELECT * FROM `quotes`");
+$authorsQuery=mysqli_query($conn, "SELECT * FROM `authors`");
+
+//loop each row of Quotes query variable and store its data into multidimensional array
+while($row=mysqli_fetch_assoc($quotesQuery)){
+    $quotesArray[]=$row;
+}
+//get the random quote position from the array
+$posQuery=rand(0,sizeof($quotesArray)-1);
+
+//loop each row of Authors query variable and store its data into multidimensional array
+while($row=mysqli_fetch_assoc($authorsQuery)){
+    $authorsArray[]=$row;
+}
+//get the random author position from the array
+$posAuthor=rand(0,sizeof($authorsArray)-1);
+
 ?>
 
 <html lang="en">
@@ -25,34 +41,51 @@ $authorquery=mysqli_query($conn, "SELECT *, authors.id AS aut_id FROM `authors` 
         <h3>Who said it?</h3>
         <div class="binaryquote" >
             <?php
-            while($row=mysqli_fetch_assoc($quotequery)){
-                echo $row['quote'];
-                $resultquote[]=$row['author_id'];
-                $resultquote[]=$row['name'];
-                $resultquote[]=$row['quote'];
-            }
+                //print the random generated Quote
+                echo $quotesArray[$posQuery]['quote'];
             ?>
         </div>
         <div class="binaryauthor">
             <?php
-            while($row=mysqli_fetch_assoc($authorquery)){
-                echo '<h3>'.$row['name'].'</h3>';
-                $resultauthor[]=$row['aut_id'];
-                $resultauthor[]=$row['name'];
-                $resultauthor[]=$row['quote'];
-            }
+                //print the random generated Author
+                echo '<h3>'.$authorsArray[$posAuthor]['name'].'</h3>';
             ?>
         </div>
 
-            <button id="BtnYes" class="button yesbutton">Yes!</button>
-            <button id="BtnNo" class="button nobutton">No!</button>
+            <button id="BtnYes" class="button yesbutton" onclick="myFunction()">Yes!</button>
+            <button id="BtnNo" class="button nobutton" onclick="myFunction2()">No!</button>
     </div>
 
-   <?php
-        echo '<pre>' . print_r($resultquote, true) . '</pre>';
-        echo '<pre>' . print_r($resultauthor, true) . '</pre>';
+    <?php
+    echo '<pre>' . print_r($quotesArray[$posQuery], true) . '</pre>';
+    echo  '<pre>' . print_r($authorsArray[$posAuthor], true) . '</pre>';
     ?>
 
+    <script>
+        //create 2 js variables to store php results for additional comparison
+        let quotesResultID = <?php echo(json_encode($quotesArray[$posQuery]['author_id'])); ?>;
+        let authorsResultID = <?php echo(json_encode($authorsArray[$posAuthor]['id'])); ?>;
+        //a variable which extracts Author-Name and show it in the alert box after
+        let authorResultName = <?php echo(json_encode($authorsArray[$posAuthor]['name'])); ?>;
+        //function for comparison the YES result
+        function myFunction() {
+            if(quotesResultID===authorsResultID){
+                alert('Correct! The right answer is: '+authorResultName);
+            }
+            else{
+                alert('Sorry, you are wrong! The right answer is: '+authorResultName);
+            }
+        }
+        //function for comparison the NO result
+        function myFunction2() {
+            if(quotesResultID!==authorsResultID){
+                alert('Correct! The right answer is:' +authorResultName);
+            }
+            else{
+                alert('Sorry, you are wrong! The right answer is:' +authorResultName);
+            }
+        }
+    </script>
 </body>
 </html>
 
