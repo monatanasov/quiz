@@ -9,7 +9,7 @@ while($row=mysqli_fetch_assoc($quotesQuery)){
     $quotesArray[]=$row;
 }
 //get the random quote position from the array
-$posQuery=rand(0,sizeof($quotesArray)-1);
+$posQuote=rand(0,sizeof($quotesArray)-1);
 
 //loop each row of Authors query variable and store its data into multidimensional array
 while($row=mysqli_fetch_assoc($authorsQuery)){
@@ -42,7 +42,7 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
         <div class="binaryquote" >
             <?php
                 //print the random generated Quote
-                echo $quotesArray[$posQuery]['quote'];
+                echo $quotesArray[$posQuote]['quote'];
             ?>
         </div>
         <div class="binaryauthor">
@@ -57,13 +57,13 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
     </div>
 
     <?php
-    echo '<pre>' . print_r($quotesArray[$posQuery], true) . '</pre>';
+    echo '<pre>' . print_r($quotesArray[$posQuote], true) . '</pre>';
     echo  '<pre>' . print_r($authorsArray[$posAuthor], true) . '</pre>';
     ?>
 
     <script>
         //create 2 js variables to store php results for additional comparison
-        let quotesResultID = <?php echo(json_encode($quotesArray[$posQuery]['author_id'])); ?>;
+        let quotesResultID = <?php echo(json_encode($quotesArray[$posQuote]['author_id'])); ?>;
         let authorsResultID = <?php echo(json_encode($authorsArray[$posAuthor]['id'])); ?>;
         //a variable which extracts Author-Name and show it in the alert box after
         let authorResultName = <?php echo(json_encode($authorsArray[$posAuthor]['name'])); ?>;
