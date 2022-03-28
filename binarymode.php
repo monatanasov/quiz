@@ -70,7 +70,6 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
         //function for comparison the YES result
         function myFunction() {
             if(quotesResultID===authorsResultID){
-
                 alert('Correct! The right answer is: '+authorResultName);
             }
             else{
