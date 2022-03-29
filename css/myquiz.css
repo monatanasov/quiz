@@ -37,3 +37,7 @@ img{
 .color{
     background-color: #FF0000;
 }
+
+.answer {
+    display: none;
+}
