@@ -26,13 +26,13 @@ while ($author = mysqli_fetch_assoc($authorsQuery)) {
     $authorsArray[] = $author;
 }
 
-echo '<pre>'. print_r($quotesArray[0], true) .'</pre>';
+//echo '<pre>'. print_r($quotesArray, true) .'</pre>';
 
 $authorsCount = count($authorsArray);
 
-$randomAuthorKey = rand(0, $authorsCount - 1);
 
-echo '<pre>'. print_r($authorsArray[$randomAuthorKey], true) .'</pre>';
+
+//echo '<pre>'. print_r($authorsArray[$randomAuthorKey], true) .'</pre>';
 ?>
 
 <html lang="en">
@@ -54,49 +54,63 @@ echo '<pre>'. print_r($authorsArray[$randomAuthorKey], true) .'</pre>';
             </div>
         </a>
         <h3>Who said it?</h3>
-        <div class="binaryquote" >
-            <?php
-            echo $quotesArray[0]['quote'];
-            ?>
-        </div>
-        <div class="binaryauthor">
-            <?php
-                echo '<h3>'.$authorsArray[$randomAuthorKey]['name'].'</h3>';
-            ?>
-        </div>
-            <?php
+
+        <?php
+            foreach ($quotesArray as $key => $quote) {
+                $quoteText = $quote['quote'];
+                $randomAuthorKey = rand(0, $authorsCount - 1);
+                $randomAuthorName = $authorsArray[$randomAuthorKey]['name'];
+
                 $check = 0;
 
                 // check if this is the author
-                if ($quotesArray[0]['author_id'] === $authorsArray[$randomAuthorKey]['id']) {
+                if ($quote['author_id'] === $authorsArray[$randomAuthorKey]['id']) {
                     $check = 1;
                 }
 
-                echo '<button id="BtnYes" class="button yesbutton" onclick="buttonClicked(1, '. $check .')" >Yes!</button>';
-                echo '<button id="BtnYes" class="button nobutton" onclick="buttonClicked(0, '. $check .')">No!</button>';
-            ?>
+                if ($key === 0) {
+                    $classes = '';
+                } else {
+                    $classes = 'hidden';
+                }
+
+                echo "
+                    <div class='$classes' id='$key'>
+                        <div class=\"binaryquote\">$quoteText</div>
+                        <div class=\"binaryauthor\"><h3>$randomAuthorName</h3></div>
+                        <button class=\"button yesbutton\" onclick=\"buttonClicked(1, $check, $key)\">Yes!</button>
+                        <button class=\"button nobutton\" onclick=\"buttonClicked(0, $check, $key)\">No!</button>
+                    </div>
+                ";
+            }
+        ?>
     </div>
     <div>
-<!--        <p class="answer" id="correct-answer">The answer is correct</p>-->
-<!--        <p class="answer" id="incorrect-answer">The answer is NOT correct</p>-->
-        <p class="answer" id="what-is-the-answer">The answer is NOT correct</p>
+        <p class="answer" id="correct-answer">The answer is correct</p>
+        <p class="answer" id="incorrect-answer">The answer is NOT correct</p>
+<!--        <p class="answer" id="what-is-the-answer">The answer is NOT correct</p>-->
     </div>
 </body>
 
 <script>
-    function buttonClicked(value, check) {
+    function buttonClicked(value, check, key) {
         // show div
-
-        let answers = document.getElementsByClassName('answer');
-        for(i = 0; i < answers.length; i++) {
-            answers[i].style.display = 'none';
-        }
 
         if (check === value) {
             document.getElementById("correct-answer").style.display = "block";
         } else {
             document.getElementById("incorrect-answer").style.display = "block";
         }
+
+        setTimeout(() => {
+            let answers = document.getElementsByClassName('answer');
+            for(i = 0; i < answers.length; i++) {
+                answers[i].style.display = 'none';
+            }
+
+            document.getElementById(key).style.display = "none";
+            document.getElementById(key + 1).style.display = "block";
+        }, 1000);
     }
 </script>
 

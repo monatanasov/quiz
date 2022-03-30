@@ -41,3 +41,7 @@ img{
 .answer {
     display: none;
 }
+
+.hidden {
+    display: none;
+}
