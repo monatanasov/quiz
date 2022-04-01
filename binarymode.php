@@ -8,15 +8,19 @@ $authorsQuery=mysqli_query($conn, "SELECT * FROM `authors`");
 while($row=mysqli_fetch_assoc($quotesQuery)){
     $quotesArray[]=$row;
 }
-//get the random quote position from the array
+
+ //get the random quote position from the array
 $posQuote=rand(0,sizeof($quotesArray)-1);
+
 
 //loop each row of Authors query variable and store its data into multidimensional array
 while($row=mysqli_fetch_assoc($authorsQuery)){
     $authorsArray[]=$row;
 }
+
 //get the random author position from the array
 $posAuthor=rand(0,sizeof($authorsArray)-1);
+
 
 ?>
 
@@ -39,27 +43,23 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
             </div>
         </a>
         <h3>Who said it?</h3>
-        <div class="binaryquote" >
-            <?php
-                //print the random generated Quote
-                echo $quotesArray[$posQuote]['quote'];
-            ?>
-        </div>
-        <div class="binaryauthor">
-            <?php
-                //print the random generated Author
-                echo '<h3>'.$authorsArray[$posAuthor]['name'].'</h3>';
-            ?>
-        </div>
-
-            <button id="BtnYes" class="button yesbutton" onclick="myFunction()">Yes!</button>
-            <button id="BtnNo" class="button nobutton" onclick="myFunction2()">No!</button>
+        <?php
+        foreach($quotesArray as $key=>$quote){
+        echo "<div class=\"binaryquote hidden\">".$quote['quote']."</div>";
+        echo "<div class=\"binaryauthor hidden\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
+        echo "<button class=\"button yesbutton\" onclick=\"myFunctionYes()\">Yes!</button>";
+        echo "<button class=\"button nobutton\" onclick=\"myFunctionNo()\">No!</button>";
+        }
+        ?>
     </div>
 
-    <?php
-    echo '<pre>' . print_r($quotesArray[$posQuote], true) . '</pre>';
-    echo  '<pre>' . print_r($authorsArray[$posAuthor], true) . '</pre>';
-    ?>
+
+
+        <?php
+        echo '<pre>' . print_r($quotesArray, true) . '</pre>';
+/*            echo '<pre>' . print_r($quotesArray[$posQuote], true) . '</pre>';
+            echo  '<pre>' . print_r($authorsArray[$posAuthor], true) . '</pre>';*/
+        ?>
 
     <script>
         //create 2 js variables to store php results for additional comparison
@@ -68,7 +68,7 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
         //a variable which extracts Author-Name and show it in the alert box after
         let authorResultName = <?php echo(json_encode($authorsArray[$posAuthor]['name'])); ?>;
         //function for comparison the YES result
-        function myFunction() {
+        function myFunctionYes() {
             if(quotesResultID===authorsResultID){
                 alert('Correct! The right answer is: '+authorResultName);
             }
@@ -77,7 +77,7 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
             }
         }
         //function for comparison the NO result
-        function myFunction2() {
+        function myFunctionNo() {
             if(quotesResultID!==authorsResultID){
                 alert('Correct! The right answer is:' +authorResultName);
             }
