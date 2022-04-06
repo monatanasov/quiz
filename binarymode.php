@@ -8,22 +8,16 @@ $authorsQuery=mysqli_query($conn, "SELECT * FROM `authors`");
 while($row=mysqli_fetch_assoc($quotesQuery)){
     $quotesArray[]=$row;
 }
-
- //get the random quote position from the array
-$posQuote=rand(0,sizeof($quotesArray)-1);
+shuffle($quotesArray);
 
 
 //loop each row of Authors query variable and store its data into multidimensional array
 while($row=mysqli_fetch_assoc($authorsQuery)){
     $authorsArray[]=$row;
 }
-
-//get the random author position from the array
-$posAuthor=rand(0,sizeof($authorsArray)-1);
-
+//echo '<pre>' . print_r($quotesArray, true) . '</pre>';
 
 ?>
-
 <html lang="en">
 <head>
   <link rel="stylesheet" href="./css/myquiz.css">
@@ -45,29 +39,24 @@ $posAuthor=rand(0,sizeof($authorsArray)-1);
         <h3>Who said it?</h3>
         <?php
         foreach($quotesArray as $key=>$quote){
-        echo "<div class=\"binaryquote hidden\">".$quote['quote']."</div>";
-        echo "<div class=\"binaryauthor hidden\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
+            //get the random author position from the array
+            $posAuthor=rand(0,sizeof($authorsArray)-1);
+        echo "<div class='hidden'>";
+        echo "<div class=\"binaryquote\">".$quote['quote']."</div>";
+        echo "<div class=\"binaryauthor\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
         echo "<button class=\"button yesbutton\" onclick=\"myFunctionYes()\">Yes!</button>";
         echo "<button class=\"button nobutton\" onclick=\"myFunctionNo()\">No!</button>";
+        echo "</div>";
         }
         ?>
     </div>
-
-
-
-        <?php
-        echo '<pre>' . print_r($quotesArray, true) . '</pre>';
-/*            echo '<pre>' . print_r($quotesArray[$posQuote], true) . '</pre>';
-            echo  '<pre>' . print_r($authorsArray[$posAuthor], true) . '</pre>';*/
-        ?>
-
     <script>
         //create 2 js variables to store php results for additional comparison
-        let quotesResultID = <?php echo(json_encode($quotesArray[$posQuote]['author_id'])); ?>;
+      /*  let quotesResultID = <?php echo(json_encode($quotesArray[$posQuote]['author_id'])); ?>;
         let authorsResultID = <?php echo(json_encode($authorsArray[$posAuthor]['id'])); ?>;
         //a variable which extracts Author-Name and show it in the alert box after
         let authorResultName = <?php echo(json_encode($authorsArray[$posAuthor]['name'])); ?>;
-        //function for comparison the YES result
+        //function for comparison the YES result*/
         function myFunctionYes() {
             if(quotesResultID===authorsResultID){
                 alert('Correct! The right answer is: '+authorResultName);
