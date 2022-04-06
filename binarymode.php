@@ -8,6 +8,7 @@ $authorsQuery=mysqli_query($conn, "SELECT * FROM `authors`");
 while($row=mysqli_fetch_assoc($quotesQuery)){
     $quotesArray[]=$row;
 }
+//shuffle all quotes in the array for later random quote use.
 shuffle($quotesArray);
 
 
@@ -15,8 +16,6 @@ shuffle($quotesArray);
 while($row=mysqli_fetch_assoc($authorsQuery)){
     $authorsArray[]=$row;
 }
-//echo '<pre>' . print_r($quotesArray, true) . '</pre>';
-
 ?>
 <html lang="en">
 <head>
@@ -41,7 +40,12 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         foreach($quotesArray as $key=>$quote){
             //get the random author position from the array
             $posAuthor=rand(0,sizeof($authorsArray)-1);
-        echo "<div class='hidden'>";
+
+            if($key===0){
+                echo "<div class='notHidden'>";
+            }else{
+                echo "<div class='hidden'>";
+            }
         echo "<div class=\"binaryquote\">".$quote['quote']."</div>";
         echo "<div class=\"binaryauthor\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
         echo "<button class=\"button yesbutton\" onclick=\"myFunctionYes()\">Yes!</button>";

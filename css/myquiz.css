@@ -59,5 +59,8 @@ img{
     background-color: #FF0000;
 }
 .hidden{
-    /*display:none;*/
+    display:none;
+}
+.notHidden{
+    display:block;
 }
