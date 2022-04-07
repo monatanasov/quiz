@@ -21,7 +21,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
     <title>Binary mode quiz</title>
 </head>
 <body>
-
     <div class="binaryglobal">
         <a href="./binarymode.php">
             <div class="leftwireframe divs">
@@ -35,22 +34,16 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         </a>
         <h3>Who said it?</h3>
         <?php
-
         $currentQuoteAuthorId=$quotesArray[0]['author_id'];
         foreach ($authorsArray as $author){
             if($currentQuoteAuthorId==$author['id']){
                 $currentQuoteAuthorName=$author['name'];
             }
         }
-
         echo '<pre>' . print_r($currentQuoteAuthorName, true) . '</pre>';
-
         foreach($quotesArray as $key=>$quote){
             //get the random author position from the Authors array
             $posAuthor=rand(0,sizeof($authorsArray)-1);
-
-
-
             $check=0;
             if($quote['author_id']===$authorsArray[$posAuthor]['id']){
                 $check=1;
@@ -66,7 +59,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         echo "<button class=\"button nobutton\" onclick=\"answerFunction(0,$check)\">No!</button>";
         echo "</div>";
         }
-
         ?>
     </div>
     <script>
