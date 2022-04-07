@@ -40,7 +40,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 $currentQuoteAuthorName=$author['name'];
             }
         }
-        echo '<pre>' . print_r($currentQuoteAuthorName, true) . '</pre>';
         foreach($quotesArray as $key=>$quote){
             //get the random author position from the Authors array
             $posAuthor=rand(0,sizeof($authorsArray)-1);
@@ -62,11 +61,12 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         ?>
     </div>
     <script>
+        let currentQuoteAuthorName = <?php echo(json_encode($currentQuoteAuthorName)); ?>;
         function answerFunction($value,$check) {
             if($value===$check){
-                alert('Correct! The right answer is: ');
+                alert('Correct! The right answer is: ' + currentQuoteAuthorName);
             }else{
-                alert('Sorry, you are wrong! The right answer is: ');
+                alert('Sorry, you are wrong! The right answer is: ' + currentQuoteAuthorName);
             }
         }
     </script>
