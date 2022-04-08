@@ -53,28 +53,35 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 $check=1;
             }
             if($key===0){
-                echo "<div class='notHidden'>";
+                echo "<div class='notHidden' id='$key'>";
             }else{
                 echo "<div class='hidden'>";
             }
         echo "<div class=\"binaryquote\">".$quote['quote']."</div>";
         echo "<div class=\"binaryauthor\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
-        echo "<button class=\"button yesbutton\" onclick=\"answerFunction(1,$check)\">Yes!</button>";
-        echo "<button class=\"button nobutton\" onclick=\"answerFunction(0,$check)\">No!</button>";
+        echo "<button class=\"button yesbutton\" onclick=\"answerFunction(1,$check,$key)\">Yes!</button>";
+        echo "<button class=\"button nobutton\" onclick=\"answerFunction(0,$check,$key)\">No!</button>";
         echo "</div>";
         }
+        //echo '<pre>' . print_r($quotesArray, true) . '</pre>';
         ?>
     </div>
     <script>
         //using json to get the author name from the complicated and slow iterations above
         let currentQuoteAuthorName = <?php echo(json_encode($currentQuoteAuthorName)); ?>;
-        function answerFunction($value,$check) {
-            if($value===$check){
+        function answerFunction(value,check,key) {
+            if(value===check){
                 alert('Correct! The right answer is: ' + currentQuoteAuthorName);
             }else{
                 alert('Sorry, you are wrong! The right answer is: ' + currentQuoteAuthorName);
             }
+            setTimeout(() => {
+                document.getElementById(key).style.display = 'none';
+                //document.getElementById(key + 1).style.display = 'block';
+            },1000)
         }
+
+
     </script>
 </body>
 </html>
