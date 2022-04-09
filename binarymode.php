@@ -55,7 +55,7 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             if($key===0){
                 echo "<div class='notHidden' id='$key'>";
             }else{
-                echo "<div class='hidden'>";
+                echo "<div class='hidden' id='$key'>>";
             }
         echo "<div class=\"binaryquote\">".$quote['quote']."</div>";
         echo "<div class=\"binaryauthor\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
@@ -63,7 +63,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         echo "<button class=\"button nobutton\" onclick=\"answerFunction(0,$check,$key)\">No!</button>";
         echo "</div>";
         }
-        //echo '<pre>' . print_r($quotesArray, true) . '</pre>';
         ?>
     </div>
     <script>
@@ -77,11 +76,9 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             }
             setTimeout(() => {
                 document.getElementById(key).style.display = 'none';
-                //document.getElementById(key + 1).style.display = 'block';
-            },1000)
+                document.getElementById(key + 1).style.display = 'block';
+            },100)
         }
-
-
     </script>
 </body>
 </html>
