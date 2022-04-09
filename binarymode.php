@@ -55,7 +55,7 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             if($key===0){
                 echo "<div class='notHidden' id='$key'>";
             }else{
-                echo "<div class='hidden' id='$key'>>";
+                echo "<div class='hidden' id='$key'>";
             }
         echo "<div class=\"binaryquote\">".$quote['quote']."</div>";
         echo "<div class=\"binaryauthor\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
