@@ -57,28 +57,42 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             }else{
                 echo "<div class='hidden' id='$key'>";
             }
-        echo "<div class=\"binaryquote\">".$quote['quote']."</div>";
-        echo "<div class=\"binaryauthor\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
-        echo "<button class=\"button yesbutton\" onclick=\"answerFunction(1,$check,$key)\">Yes!</button>";
-        echo "<button class=\"button nobutton\" onclick=\"answerFunction(0,$check,$key)\">No!</button>";
-        echo "</div>";
+                echo "<div class=\"binaryquote\">".$quote['quote']."</div>";
+                echo "<div class=\"binaryauthor\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
+                echo "<button class=\"button yesbutton\" onclick=\"answerFunction(1,$check,$key)\">Yes!</button>";
+                echo "<button class=\"button nobutton\" onclick=\"answerFunction(0,$check,$key)\">No!</button>";
+                echo "</div>";
         }
+            echo "<div class=\"notHidden\">";
+            echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
+            echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" value=\"\">";
+            echo "<button onClick=\"window.location.reload();\">Start again</button>";
+            echo "</div>";
         ?>
     </div>
     <script>
         //using json to get the author name from the complicated and slow iterations above
         let currentQuoteAuthorName = <?php echo(json_encode($currentQuoteAuthorName)); ?>;
+        let currentAnswersCount = 0;
+
         function answerFunction(value,check,key) {
             if(value===check){
                 alert('Correct! The right answer is: ' + currentQuoteAuthorName);
+                currentAnswersCount = currentAnswersCount + 1;
             }else{
                 alert('Sorry, you are wrong! The right answer is: ' + currentQuoteAuthorName);
             }
             setTimeout(() => {
                 document.getElementById(key).style.display = 'none';
+                if(document.getElementById(key + 1) != null){
                 document.getElementById(key + 1).style.display = 'block';
+                }else{
+                    alert('Congratzzzzzzzzzzzz');
+                }
+                console.log(currentAnswersCount);
             },100)
         }
+
     </script>
 </body>
 </html>
