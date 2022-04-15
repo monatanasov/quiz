@@ -63,9 +63,9 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 echo "<button class=\"button nobutton\" onclick=\"answerFunction(0,$check,$key)\">No!</button>";
                 echo "</div>";
         }
-            echo "<div class=\"notHidden\">";
+            echo "<div class=\"Hidden\" id=\"endOfQuizResult\">";
             echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
-            echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" value=\"\">";
+            echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
             echo "<button onClick=\"window.location.reload();\">Start again</button>";
             echo "</div>";
         ?>
@@ -73,8 +73,8 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
     <script>
         //using json to get the author name from the complicated and slow iterations above
         let currentQuoteAuthorName = <?php echo(json_encode($currentQuoteAuthorName)); ?>;
+        //variable for counting all correct answers
         let currentAnswersCount = 0;
-
         function answerFunction(value,check,key) {
             if(value===check){
                 alert('Correct! The right answer is: ' + currentQuoteAuthorName);
@@ -87,12 +87,14 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 if(document.getElementById(key + 1) != null){
                 document.getElementById(key + 1).style.display = 'block';
                 }else{
-                    alert('Congratzzzzzzzzzzzz');
+                    alert('You have answered all questions. Click "OK" to check your result.');
+                    // et the value of an html input field with already counted number of correct answers
+                    document.getElementById("inputAnswersCount").value = currentAnswersCount;
+                    //show the div with result
+                    document.getElementById("endOfQuizResult").style.display = 'block';
                 }
-                console.log(currentAnswersCount);
             },100)
         }
-
     </script>
 </body>
 </html>
