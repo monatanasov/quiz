@@ -1,4 +1,5 @@
 <?php
+session_start();
 include './dbconn.php';
 // store all db queries in a variable
 $quotesQuery=mysqli_query($conn, "SELECT * FROM `quotes`");
@@ -7,8 +8,6 @@ $authorsQuery=mysqli_query($conn, "SELECT * FROM `authors`");
 while($row=mysqli_fetch_assoc($quotesQuery)){
     $quotesArray[]=$row;
 }
-//shuffle all quotes in the array for later random quote use.
-shuffle($quotesArray);
 //loop each row of Authors query variable and store its data into multidimensional array
 while($row=mysqli_fetch_assoc($authorsQuery)){
     $authorsArray[]=$row;
@@ -34,53 +33,74 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         </a>
         <h3>Who said it?</h3>
         <?php
-        //get the current Author_ID from the first element of the QuotesArray
-        $currentQuoteAuthorId=$quotesArray[0]['author_id'];
-        //Iterate over whole table to get the Author Name using Author_ID from previous row
-        //Is there another way to do that? Too complicated and slow way.
-        foreach ($authorsArray as $author){
-            if($currentQuoteAuthorId==$author['id']){
-                $currentQuoteAuthorName=$author['name'];
+            //this variable will be used when buttons are clicked to check the correct/wrong answer
+            //check becomes TRUE on match.
+            $check=0;
+            if($_POST['current_quote_author_id']===$_POST['current_author_id']){
+                $check = 1;
             }
-        }
-        foreach($quotesArray as $key=>$quote){
+            //$_POST returns 1 or 0 as string that's why the sign is ==
+
+            if($check==$_POST['answer']){
+                echo '<p>CORRECT</p>';
+            }else{
+                echo '<p>INcorrect</p>';
+            }
+
+                var_dump($_SESSION);
+                if(!$_POST){
+                $key=0;
+                $_SESSION['key']=0;
+
+                }else{
+                    $_SESSION['key']=$_SESSION['key'] + 1;
+                    $key=$_SESSION['key'];
+                }
+                var_dump($_SESSION);
+            $quote=$quotesArray[$key];
+            $currentQuoteAuthorId=$quote['author_id'];
             //get the random author position from the Authors array
             $posAuthor=rand(0,sizeof($authorsArray)-1);
-            //this variable will be used when buttons are clicked to check the correct/wrong answer
-            $check=0;
-            //check becomes TRUE on match.
-            if($quote['author_id']===$authorsArray[$posAuthor]['id']){
-                $check=1;
-            }
-            if($key===0){
+            $currentAuthorId=$authorsArray[$posAuthor]['id'];
+
+
+            if(isset($key)){
                 echo "<div class='notHidden' id='$key'>";
-            }else{
-                echo "<div class='hidden' id='$key'>";
+                echo "<div class=\"binaryquote\">" . $quote['quote'] . "</div>";
+                echo "<div class=\"binaryauthor\"><h3>" . $authorsArray[$posAuthor]['name'] . "</h3></div>";
+
             }
-                echo "<div class=\"binaryquote\">".$quote['quote']."</div>";
-                echo "<div class=\"binaryauthor\"><h3>".$authorsArray[$posAuthor]['name']."</h3></div>";
-                echo "<button class=\"button yesbutton\" onclick=\"answerFunction(1,$check,$key)\">Yes!</button>";
-                echo "<button class=\"button nobutton\" onclick=\"answerFunction(0,$check,$key)\">No!</button>";
+                echo "<form action='binarymode.php' method=\"post\">";
+                echo "<input name=\"current_quote_author_id\" value=\"$currentQuoteAuthorId\">";
+                echo "<input name=\"current_author_id\" value=\"$currentAuthorId\">";
+                echo "<button type=\"submit\" class=\"button yesbutton\" name=\"answer\" value=1>Yes!</button>";
+                echo "<button type=\"submit\" class=\"button nobutton\" name=\"answer\" value=0>No!</button>";
                 echo "</div>";
-        }
+                echo "</form>";
+/*                var_dump($_POST['answer']);
+                echo '<pre>' . print_r($_SESSION['key'], true) . '</pre>';*/
+
+
+
+        /*
             echo "<div class=\"Hidden\" id=\"endOfQuizResult\">";
             echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
             echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
-            echo "<button onClick=\"window.location.reload();\">Start again</button>";
+            echo "<button onClick=\"window.location.reload();\">Start over</button>";
             echo "</div>";
+        */
         ?>
+
     </div>
-    <script>
-        //using json to get the author name from the complicated and slow iterations above
-        let currentQuoteAuthorName = <?php echo(json_encode($currentQuoteAuthorName)); ?>;
+<!--    <script>
         //variable for counting all correct answers
         let currentAnswersCount = 0;
         function answerFunction(value,check,key) {
             if(value===check){
-                alert('Correct! The right answer is: ' + currentQuoteAuthorName);
+                alert('Correct! The right answer is: ');
                 currentAnswersCount = currentAnswersCount + 1;
             }else{
-                alert('Sorry, you are wrong! The right answer is: ' + currentQuoteAuthorName);
+                alert('Sorry, you are wrong! The right answer is: ');
             }
             setTimeout(() => {
                 document.getElementById(key).style.display = 'none';
@@ -95,10 +115,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 }
             },100)
         }
-    </script>
+    </script>-->
 </body>
 </html>
-
-
-
-
