@@ -43,52 +43,42 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
 
             if($check==$_POST['answer']){
                 echo '<p>CORRECT</p>';
-            }else{
+            } else{
                 echo '<p>INcorrect</p>';
             }
-                if(!isset($_SESSION['key'])){
-                    $key=0;
-                    $_SESSION['key']=0;
-                } else{
-                    $_SESSION['key']=$_SESSION['key'] + 1;
-                    $key=$_SESSION['key'];
-                }
-
-        echo '<pre>' . print_r($_SESSION['key'], true) . '</pre>';
-        echo '<pre>' . print_r(sizeof($quotesArray), true) . '</pre>';
-
-
-            $quote=$quotesArray[$key];
-            $currentQuoteAuthorId=$quote['author_id'];
-            //get the random author position from the Authors array
-            $posAuthor=rand(0,sizeof($authorsArray)-1);
-            $currentAuthorId=$authorsArray[$posAuthor]['id'];
-
-            if(isset($key)){
-                echo "<div class='notHidden' id='$key'>";
-                echo "<div class=\"binaryquote\">" . $quote['quote'] . "</div>";
-                echo "<div class=\"binaryauthor\"><h3>" . $authorsArray[$posAuthor]['name'] . "</h3></div>";
-
+            if(!isset($_SESSION['key'])){
+                $key=0;
+                $_SESSION['key']=0;
+            } else{
+                $_SESSION['key']=$_SESSION['key'] + 1;
+                $key=$_SESSION['key'];
             }
+
+            if(key_exists($key,$quotesArray)){
+                $quote=$quotesArray[$key];
+                $currentQuoteAuthorId=$quote['author_id'];
+                //get the random author position from the Authors array
+                $posAuthor=rand(0,sizeof($authorsArray)-1);
+                $currentAuthorId=$authorsArray[$posAuthor]['id'];
+                if(isset($key)){
+                    echo "<div class='notHidden' id='$key'>";
+                    echo "<div class=\"binaryquote\">" . $quote['quote'] . "</div>";
+                    echo "<div class=\"binaryauthor\"><h3>" . $authorsArray[$posAuthor]['name'] . "</h3></div>";
                 echo "<form action='binarymode.php' method=\"post\">";
-                echo "<input name=\"current_quote_author_id\" value=\"$currentQuoteAuthorId\">";
-                echo "<input name=\"current_author_id\" value=\"$currentAuthorId\">";
+                echo "<input class=\"Hidden\" name=\"current_quote_author_id\" value=\"$currentQuoteAuthorId\">";
+                echo "<input class=\"Hidden\" name=\"current_author_id\" value=\"$currentAuthorId\">";
                 echo "<button type=\"submit\" class=\"button yesbutton\" name=\"answer\" value=1>Yes!</button>";
                 echo "<button type=\"submit\" class=\"button nobutton\" name=\"answer\" value=0>No!</button>";
                 echo "</div>";
                 echo "</form>";
-/*                var_dump($_POST['answer']);
-                echo '<pre>' . print_r($_SESSION['key'], true) . '</pre>';*/
-
-
-
-        /*
-                    echo "<div class=\"notHidden\" id=\"endOfQuizResult\">";
-                    echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
-                    echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
-                    echo "<button onClick=\"window.location.reload();\">Start over</button>";
-                    echo "</div>";
-        */
+                }
+            } else{
+                echo "<div class=\"notHidden\" id=\"endOfQuizResult\">";
+                echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
+                echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
+                echo "<button onClick=\"window.location.reload();\">Start over</button>";
+                echo "</div>";
+            }
         ?>
 
     </div>
