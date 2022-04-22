@@ -46,23 +46,23 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             }else{
                 echo '<p>INcorrect</p>';
             }
-
-                var_dump($_SESSION);
-                if(!$_POST){
-                $key=0;
-                $_SESSION['key']=0;
-
-                }else{
+                if(!isset($_SESSION['key'])){
+                    $key=0;
+                    $_SESSION['key']=0;
+                } else{
                     $_SESSION['key']=$_SESSION['key'] + 1;
                     $key=$_SESSION['key'];
                 }
-                var_dump($_SESSION);
+
+        echo '<pre>' . print_r($_SESSION['key'], true) . '</pre>';
+        echo '<pre>' . print_r(sizeof($quotesArray), true) . '</pre>';
+
+
             $quote=$quotesArray[$key];
             $currentQuoteAuthorId=$quote['author_id'];
             //get the random author position from the Authors array
             $posAuthor=rand(0,sizeof($authorsArray)-1);
             $currentAuthorId=$authorsArray[$posAuthor]['id'];
-
 
             if(isset($key)){
                 echo "<div class='notHidden' id='$key'>";
@@ -83,11 +83,11 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
 
 
         /*
-            echo "<div class=\"Hidden\" id=\"endOfQuizResult\">";
-            echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
-            echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
-            echo "<button onClick=\"window.location.reload();\">Start over</button>";
-            echo "</div>";
+                    echo "<div class=\"notHidden\" id=\"endOfQuizResult\">";
+                    echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
+                    echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
+                    echo "<button onClick=\"window.location.reload();\">Start over</button>";
+                    echo "</div>";
         */
         ?>
 
