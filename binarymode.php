@@ -41,18 +41,23 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             }
             //$_POST returns 1 or 0 as string that's why the sign is ==
 
-            if($check==$_POST['answer']){
-                echo '<p>CORRECT</p>';
-            } else{
-                echo '<p>INcorrect</p>';
-            }
             if(!isset($_SESSION['key'])){
                 $key=0;
                 $_SESSION['key']=0;
+                $_SESSION['correct-Answers']=0;
             } else{
                 $_SESSION['key']=$_SESSION['key'] + 1;
                 $key=$_SESSION['key'];
             }
+
+            if($check==$_POST['answer']){
+                echo '<p>CORRECT</p>';
+                $_SESSION['correct-Answers'] = $_SESSION['correct-Answers'] + 1;
+            } else{
+                echo '<p>INcorrect</p>';
+            }
+
+            echo '<pre>' . print_r($_SESSION['correct-Answers'], true) . '</pre>';
 
             if(key_exists($key,$quotesArray)){
                 $quote=$quotesArray[$key];
@@ -73,11 +78,13 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 echo "</form>";
                 }
             } else{
-                echo "<div class=\"notHidden\" id=\"endOfQuizResult\">";
-                echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
-                echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
-                echo "<button onClick=\"window.location.reload();\">Start over</button>";
-                echo "</div>";
+                echo "<form action='binarymode.php' method=\"post\">";
+                    echo "<div class=\"notHidden\" id=\"endOfQuizResult\">";
+                    echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
+                    echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
+                    echo "<button name=\"start_over_btn\">Start over</button>";
+                    echo "</div>";
+                echo "</form>";
             }
         ?>
 
