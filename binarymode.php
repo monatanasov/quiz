@@ -39,31 +39,37 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             if($_POST['current_quote_author_id']===$_POST['current_author_id']){
                 $check = 1;
             }
-
+            //on page reload if there's no SESSION key set these variables
+            //key and SESSION['key'] will be used to change the Quotes div below
+            //SESSION CAC will hold all correct user answers later
             if(!isset($_SESSION['key'])){
                 $key=0;
                 $_SESSION['key']=0;
                 $_SESSION['correct_Answers_Count']=0;
             } else{
+                //if there's SESSION add +1. Key variable assigns its value.
+                //CORRECT ORDER IS A MUST
                 $_SESSION['key']=$_SESSION['key'] + 1;
                 $key=$_SESSION['key'];
             }
-
             //$_POST returns 1 or 0 as string that's why the sign is ==
+            //Paragraph classes added for later use
             if($check==$_POST['answer']){
                 echo '<p class=\"display_answer_txt\">CORRECT</p>';
                 $_SESSION['correct_Answers_Count'] = $_SESSION['correct_Answers_Count'] + 1;
             } else{
                 echo '<p class=\"display_answer_txt\">INcorrect</p>';
+
             }
 
+            echo '<pre>' . print_r($_SESSION['correct_Answers_Count'], true) . '</pre>';
+
+            //destroy the session at start quiz again on btn click/form submit.
             //isset is a MUST
             if(isset($_POST['start_over_btn'])){
                 session_destroy();
                 header('Location: binarymode.php');
             }
-
-
 
             if(key_exists($key,$quotesArray)){
                 $quote=$quotesArray[$key];
@@ -94,7 +100,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 echo "</form>";
             }
         ?>
-
     </div>
 </body>
 </html>
