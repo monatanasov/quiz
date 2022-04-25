@@ -39,6 +39,10 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             if($_POST['current_quote_author_id']===$_POST['current_author_id']){
                 $check = 1;
             }
+
+        echo '<pre>' . print_r($_POST['current_quote_author_id'], true) . '</pre>';
+        echo '<pre>' . print_r(isset($_POST['current_quote_author_id']), true) . '</pre>';
+
             //on page reload if there's no SESSION key set these variables
             //key and SESSION['key'] will be used to change the Quotes div below
             //SESSION CAC will hold all correct user answers later
@@ -59,7 +63,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 $_SESSION['correct_Answers_Count'] = $_SESSION['correct_Answers_Count'] + 1;
             } else{
                 echo '<p class=\"display_answer_txt\">INcorrect</p>';
-
             }
 
             echo '<pre>' . print_r($_SESSION['correct_Answers_Count'], true) . '</pre>';
