@@ -44,21 +44,18 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             if(!isset($_SESSION['key'])){
                 $key=0;
                 $_SESSION['key']=0;
-                $_SESSION['correct-Answers']=0;
+                $_SESSION['correct_Answers']=0;
             } else{
                 $_SESSION['key']=$_SESSION['key'] + 1;
                 $key=$_SESSION['key'];
             }
 
             if($check==$_POST['answer']){
-                echo '<p>CORRECT</p>';
-                $_SESSION['correct-Answers'] = $_SESSION['correct-Answers'] + 1;
+                echo '<p class=\"display_answer_txt\">CORRECT</p>';
+                $_SESSION['correct_Answers'] = $_SESSION['correct_Answers'] + 1;
             } else{
-                echo '<p>INcorrect</p>';
+                echo '<p class=\"display_answer_txt\">INcorrect</p>';
             }
-
-            echo '<pre>' . print_r($_SESSION['correct-Answers'], true) . '</pre>';
-
             if(key_exists($key,$quotesArray)){
                 $quote=$quotesArray[$key];
                 $currentQuoteAuthorId=$quote['author_id'];
@@ -78,10 +75,11 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 echo "</form>";
                 }
             } else{
+                $correctAnswers=$_SESSION['correct_Answers'];
                 echo "<form action='binarymode.php' method=\"post\">";
                     echo "<div class=\"notHidden\" id=\"endOfQuizResult\">";
                     echo "<label for=\"inputAnswersCount\">Correct Answers:</label>";
-                    echo "<input type=\"text\" id=\"inputAnswersCount\" name=\inputAnswersCount\" readonly>";
+                    echo "<input type=\"text\" id=\"inputAnswersCount\" name=\"inputAnswersCount\" value=\"$correctAnswers\" readonly>";
                     echo "<button name=\"start_over_btn\">Start over</button>";
                     echo "</div>";
                 echo "</form>";
@@ -89,29 +87,5 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         ?>
 
     </div>
-<!--    <script>
-        //variable for counting all correct answers
-        let currentAnswersCount = 0;
-        function answerFunction(value,check,key) {
-            if(value===check){
-                alert('Correct! The right answer is: ');
-                currentAnswersCount = currentAnswersCount + 1;
-            }else{
-                alert('Sorry, you are wrong! The right answer is: ');
-            }
-            setTimeout(() => {
-                document.getElementById(key).style.display = 'none';
-                if(document.getElementById(key + 1) != null){
-                document.getElementById(key + 1).style.display = 'block';
-                }else{
-                    alert('You have answered all questions. Click "OK" to check your result.');
-                    // et the value of an html input field with already counted number of correct answers
-                    document.getElementById("inputAnswersCount").value = currentAnswersCount;
-                    //show the div with result
-                    document.getElementById("endOfQuizResult").style.display = 'block';
-                }
-            },100)
-        }
-    </script>-->
 </body>
 </html>
