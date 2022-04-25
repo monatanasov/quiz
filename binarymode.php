@@ -39,7 +39,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             if($_POST['current_quote_author_id']===$_POST['current_author_id']){
                 $check = 1;
             }
-            //$_POST returns 1 or 0 as string that's why the sign is ==
 
             if(!isset($_SESSION['key'])){
                 $key=0;
@@ -50,6 +49,7 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 $key=$_SESSION['key'];
             }
 
+            //$_POST returns 1 or 0 as string that's why the sign is ==
             if($check==$_POST['answer']){
                 echo '<p class=\"display_answer_txt\">CORRECT</p>';
                 $_SESSION['correct_Answers'] = $_SESSION['correct_Answers'] + 1;
