@@ -37,10 +37,36 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             if ($_POST) {
                 //this variable will be used when buttons are clicked to check the correct/wrong answer
                 //check becomes TRUE on match.
+                $postQuoteId = $_POST['current_quote_id'];
+                $postAuthorId = $_POST['current_author_id'];
+
+                // OPTION 1
+                // mysql query to check if the author of quote with id $postQuoteId equals $postAuthorId
+                $query = mysqli_query($conn, "SELECT * FROM `quotes` WHERE `id` = 1");
+
+                while($row = mysqli_fetch_assoc($query)){
+                    $postQuote = $row;
+                }
+                echo '<pre>' . print_r($postQuote, true) . '</pre>';
                 $check = false;
-                if ($_POST['current_quote_author_id'] === $_POST['current_author_id']) {
+                if ($postQuote['author_id'] == $postAuthorId) {
                     $check = true;
                 }
+
+//                // OPTION 2
+//                // mysql query to check if the author of quote with id $postQuoteId equals $postAuthorId
+//                $query = mysqli_query($conn, "SELECT * FROM `quotes` WHERE `id` = $postQuoteId AND `author_id` = $postAuthorId");
+//
+//                $postQuote = [];
+//                while($row = mysqli_fetch_assoc($query)){
+//                    $postQuote = $row;
+//                }
+//                echo '<pre>' . print_r($postQuote, true) . '</pre>';
+//                $check = false;
+//                if ($postQuote) {
+//                    $check = true;
+//                }
+
 
                 echo '<div id="display_answer_div">';
                     //$_POST returns 1 or 0 as string that's why the sign is ==
@@ -79,7 +105,7 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
 
             if(key_exists($key,$quotesArray)){
                 $quote=$quotesArray[$key];
-                $currentQuoteAuthorId=$quote['author_id'];
+                $currentQuoteId = $quote['id'];
                 //get the random author position from the Authors array
                 $posAuthor=rand(0,sizeof($authorsArray)-1);
                 $currentAuthorId=$authorsArray[$posAuthor]['id'];
@@ -88,7 +114,7 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                     echo "<div class=\"binaryquote\">" . $quote['quote'] . "</div>";
                     echo "<div class=\"binaryauthor\"><h3>" . $authorsArray[$posAuthor]['name'] . "</h3></div>";
                 echo "<form action='binarymode.php' method=\"post\">";
-                echo "<input class=\"Hidden\" name=\"current_quote_author_id\" value=\"$currentQuoteAuthorId\">";
+                echo "<input class=\"Hidden\" name=\"current_quote_id\" value=\"$currentQuoteId\">";
                 echo "<input class=\"Hidden\" name=\"current_author_id\" value=\"$currentAuthorId\">";
                 echo "<button type=\"submit\" class=\"button yesbutton\" name=\"answer\" value=1>Yes!</button>";
                 echo "<button type=\"submit\" class=\"button nobutton\" name=\"answer\" value=0>No!</button>";
@@ -110,15 +136,15 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
 </body>
 <script type="text/javascript">
     window.onload = function () {
-        let displayAnswerDiv = document.getElementById('display_answer_div');
-
-        if (displayAnswerDiv) {
-            // wait for 3 sec and hide
-            setTimeout(() => {
-                // hide the element
-                displayAnswerDiv.style.display = 'none';
-            }, 1000);
-        }
+        // let displayAnswerDiv = document.getElementById('display_answer_div');
+        //
+        // if (displayAnswerDiv) {
+        //     // wait for 3 sec and hide
+        //     setTimeout(() => {
+        //         // hide the element
+        //         displayAnswerDiv.style.display = 'none';
+        //     }, 1000);
+        // }
     };
 </script>
 </html>
