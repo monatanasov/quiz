@@ -33,15 +33,26 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         </a>
         <h3>Who said it?</h3>
         <?php
-            //this variable will be used when buttons are clicked to check the correct/wrong answer
-            //check becomes TRUE on match.
-            $check=0;
-            if($_POST['current_quote_author_id']===$_POST['current_author_id']){
-                $check = 1;
-            }
 
-        echo '<pre>' . print_r($_POST['current_quote_author_id'], true) . '</pre>';
-        echo '<pre>' . print_r(isset($_POST['current_quote_author_id']), true) . '</pre>';
+            if ($_POST) {
+                //this variable will be used when buttons are clicked to check the correct/wrong answer
+                //check becomes TRUE on match.
+                $check = false;
+                if ($_POST['current_quote_author_id'] === $_POST['current_author_id']) {
+                    $check = true;
+                }
+
+                echo '<div id="display_answer_div">';
+                    //$_POST returns 1 or 0 as string that's why the sign is ==
+                    //Paragraph classes added for later use
+                    if($check === (bool) $_POST['answer']){
+                        echo '<p>CORRECT</p>';
+                        $_SESSION['correct_Answers_Count'] = $_SESSION['correct_Answers_Count'] + 1;
+                    } else{
+                        echo '<p>INcorrect</p>';
+                    }
+                echo '</div>';
+            }
 
             //on page reload if there's no SESSION key set these variables
             //key and SESSION['key'] will be used to change the Quotes div below
@@ -55,14 +66,6 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 //CORRECT ORDER IS A MUST
                 $_SESSION['key']=$_SESSION['key'] + 1;
                 $key=$_SESSION['key'];
-            }
-            //$_POST returns 1 or 0 as string that's why the sign is ==
-            //Paragraph classes added for later use
-            if($check==$_POST['answer']){
-                echo '<p class=\"display_answer_txt\">CORRECT</p>';
-                $_SESSION['correct_Answers_Count'] = $_SESSION['correct_Answers_Count'] + 1;
-            } else{
-                echo '<p class=\"display_answer_txt\">INcorrect</p>';
             }
 
             echo '<pre>' . print_r($_SESSION['correct_Answers_Count'], true) . '</pre>';
@@ -105,4 +108,17 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         ?>
     </div>
 </body>
+<script type="text/javascript">
+    window.onload = function () {
+        let displayAnswerDiv = document.getElementById('display_answer_div');
+
+        if (displayAnswerDiv) {
+            // wait for 3 sec and hide
+            setTimeout(() => {
+                // hide the element
+                displayAnswerDiv.style.display = 'none';
+            }, 1000);
+        }
+    };
+</script>
 </html>
