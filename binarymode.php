@@ -2,24 +2,23 @@
 session_start();
 include './dbconn.php';
 // store all db queries in a variable
-$quotesQuery=mysqli_query($conn, "SELECT * FROM `quotes`");
-$authorsQuery=mysqli_query($conn, "SELECT * FROM `authors`");
+$quotesQuery = mysqli_query($conn, "SELECT * FROM `quotes`");
+$authorsQuery = mysqli_query($conn, "SELECT * FROM `authors`");
 //loop each row of Quotes query variable and store its data into multidimensional array
-while($row=mysqli_fetch_assoc($quotesQuery)){
+while (
+    $row = mysqli_fetch_assoc($quotesQuery)
+) {
     $quotesArray[]=$row;
 }
 //loop each row of Authors query variable and store its data into multidimensional array
-while($row=mysqli_fetch_assoc($authorsQuery)){
+while (
+    $row=mysqli_fetch_assoc($authorsQuery)
+) {
     $authorsArray[]=$row;
 }
 ?>
 <html lang="en">
 <head>
-    <script>
-        setTimeout(() => {
-            document.getElementsByClassName("display_answer_txt").style.display='none';
-        },1000)
-    </script>
   <link rel="stylesheet" href="./css/myquiz.css">
     <meta charset="UTF-8" >
     <title>Binary mode quiz</title>
