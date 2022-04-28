@@ -15,6 +15,11 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
 ?>
 <html lang="en">
 <head>
+    <script>
+        setTimeout(() => {
+            document.getElementsByClassName("display_answer_txt").style.display='none';
+        },1000)
+    </script>
   <link rel="stylesheet" href="./css/myquiz.css">
     <meta charset="UTF-8" >
     <title>Binary mode quiz</title>
@@ -33,16 +38,24 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
         </a>
         <h3>Who said it?</h3>
         <?php
-            //this variable will be used when buttons are clicked to check the correct/wrong answer
-            //check becomes TRUE on match.
-            $check=0;
-            if($_POST['current_quote_author_id']===$_POST['current_author_id']){
-                $check = 1;
+            if($_POST){
+                //this variable will be used when buttons are clicked to check the correct/wrong answer
+                //check becomes TRUE on match.
+                $check=0;
+                if($_POST['current_quote_author_id']===$_POST['current_author_id']){
+                    $check = 1;
+                }
+                //$_POST returns 1 or 0 as string that's why the sign is ==
+                //Paragraph classes added for later use
+                echo '<div id="user_answer_div">';
+                if($check === (int) $_POST['answer']){
+                    echo "<p>CORRECT</p>";
+                    $_SESSION['correct_Answers_Count'] = $_SESSION['correct_Answers_Count'] + 1;
+                } else{
+                    echo '<p>INcorrect</p>';
+                }
+                echo '</div>';
             }
-
-        echo '<pre>' . print_r($_POST['current_quote_author_id'], true) . '</pre>';
-        echo '<pre>' . print_r(isset($_POST['current_quote_author_id']), true) . '</pre>';
-
             //on page reload if there's no SESSION key set these variables
             //key and SESSION['key'] will be used to change the Quotes div below
             //SESSION CAC will hold all correct user answers later
@@ -56,24 +69,12 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
                 $_SESSION['key']=$_SESSION['key'] + 1;
                 $key=$_SESSION['key'];
             }
-            //$_POST returns 1 or 0 as string that's why the sign is ==
-            //Paragraph classes added for later use
-            if($check==$_POST['answer']){
-                echo '<p class=\"display_answer_txt\">CORRECT</p>';
-                $_SESSION['correct_Answers_Count'] = $_SESSION['correct_Answers_Count'] + 1;
-            } else{
-                echo '<p class=\"display_answer_txt\">INcorrect</p>';
-            }
-
-            echo '<pre>' . print_r($_SESSION['correct_Answers_Count'], true) . '</pre>';
-
             //destroy the session at start quiz again on btn click/form submit.
             //isset is a MUST
             if(isset($_POST['start_over_btn'])){
                 session_destroy();
                 header('Location: binarymode.php');
             }
-
             if(key_exists($key,$quotesArray)){
                 $quote=$quotesArray[$key];
                 $currentQuoteAuthorId=$quote['author_id'];
@@ -104,5 +105,13 @@ while($row=mysqli_fetch_assoc($authorsQuery)){
             }
         ?>
     </div>
+    <script>
+    let disUserAnswer = document.getElementById('user_answer_div');
+    if(disUserAnswer){
+        setTimeout(() => {
+            disUserAnswer.style.display = 'none';
+        }, "1000")
+    }
+    </script>
 </body>
 </html>
