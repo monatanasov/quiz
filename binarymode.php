@@ -38,10 +38,19 @@ while (
         <h3>Who said it?</h3>
         <?php
             if ($_POST) {
+                //These variables collect the info about current Quote_ID and Author_ID
+                //their values are parsed from string to int for additional comparison later using DB
+                $postIntQuoteId = (int)$_POST['current_quote_id'];
+                $postIntAuthorId = (int)$_POST['current_author_id'];
+                //Using our collected variables above we have to check is there a match between
+                //our variables in current POST. If there's a match our DB returns a row.
+                $currentQuoteQuerySql = "SELECT * FROM `quotes` WHERE `id` = '$postIntQuoteId' AND `author_id` = '$postIntAuthorId'";
+                //that Query returns mysqli_num_rows = 1 on match or 0 without match
+                $currentSqlResult = mysqli_query($conn,$currentQuoteQuerySql);
                 //this variable will be used when buttons are clicked to check the correct/wrong answer
-                //check becomes TRUE on match.
+                //check becomes TRUE when mysqli_num_rows return value of 1
                 $check = 0;
-                if ($_POST['current_quote_author_id'] === $_POST['current_author_id']) {
+                if (mysqli_num_rows($currentSqlResult) >=1) {
                     $check = 1;
                 }
                 //$_POST returns 1 or 0 as string that's why the sign is ==
@@ -76,16 +85,16 @@ while (
             }
             if (key_exists($key, $quotesArray)) {
                 $quote = $quotesArray[$key];
-                $currentQuoteAuthorId = $quote['author_id'];
+                (int)$currentQuoteId = $quote['id'];
                 //get the random author position from the Authors array
                 $posAuthor = rand(0, sizeof($authorsArray)-1);
-                $currentAuthorId = $authorsArray[$posAuthor]['id'];
+                (int)$currentAuthorId = $authorsArray[$posAuthor]['id'];
                 if (isset($key)) {
                     echo "<div class='notHidden' id='$key'>";
                     echo "<div class=\"binaryquote\">" . $quote['quote'] . "</div>";
                     echo "<div class=\"binaryauthor\"><h3>" . $authorsArray[$posAuthor]['name'] . "</h3></div>";
                 echo "<form action='binarymode.php' method=\"post\">";
-                echo "<input class=\"Hidden\" name=\"current_quote_author_id\" value=\"$currentQuoteAuthorId\">";
+                echo "<input class=\"Hidden\" name=\"current_quote_id\" value=\"$currentQuoteId\">";
                 echo "<input class=\"Hidden\" name=\"current_author_id\" value=\"$currentAuthorId\">";
                 echo "<button type=\"submit\" class=\"button yesbutton\" name=\"answer\" value=1>Yes!</button>";
                 echo "<button type=\"submit\" class=\"button nobutton\" name=\"answer\" value=0>No!</button>";
