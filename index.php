@@ -2,6 +2,9 @@
 include 'dbconn.php';
 $query=mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id");
 ?>
+<a href="http://dev.quiz/binarymode.php">Binary mode</a>
+<a href="http://dev.quiz/add-author.php">Add author</a>
+<a href="http://dev.quiz/add-quote.php">Add quote</a>
 <table border="1px solid black">
     <tr>
         <th>Author</th>
