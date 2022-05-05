@@ -2,6 +2,7 @@
 include 'dbconn.php';
 $query=mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id");
 ?>
+<a href="addAuthor.php">Add Author</a>
 <table border="1px solid black">
     <tr>
         <th>Author</th>

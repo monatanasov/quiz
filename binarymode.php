@@ -24,6 +24,8 @@ while (
     <title>Binary mode quiz</title>
 </head>
 <body>
+    <a href="./index.php">Main page</a><br>
+    <a href="addAuthor.php">Add Author</a>
     <div class="binaryglobal">
         <a href="./binarymode.php">
             <div class="leftwireframe divs">
