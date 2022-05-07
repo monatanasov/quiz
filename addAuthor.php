@@ -4,6 +4,7 @@ mb_internal_encoding("UTF-8");
 
 
 
+
 ?>
 
 
@@ -18,23 +19,23 @@ mb_internal_encoding("UTF-8");
 
 <?php
     if ($_POST) {
-    $trimmedAuthorName = trim($_POST['authorName']);
-    $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$trimmedAuthorName'";
+    $authorName = trim($_POST['authorName']);
+    $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$authorName'";
     $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
         if (
-            !mb_strlen($trimmedAuthorName) >= 1
-            && !mb_strlen($trimmedAuthorName) <=255
+            !mb_strlen($authorName) >= 1
+            && !mb_strlen($authorName) <=255
         ) {
             echo 'Author name must be between 1 and 255 characters long!';
         }
         if (mysqli_num_rows($authorCheckResult) >= 1){
             echo 'This Author already exists!';
         } else {
-            $insertAuthorSql = "INSERT INTO `authors`(`id`, `name`) VALUES (NULL,'$trimmedAuthorName')";
+            $insertAuthorSql = "INSERT INTO `authors`(`id`, `name`) VALUES (NULL,'$authorName')";
             $insertAuthorQuery = mysqli_query($conn,$insertAuthorSql);
-            echo 'Author ' . $trimmedAuthorName . ' was successfully added';
+            echo 'Author ' . $authorName . ' was successfully added';
         }
-        echo '<pre>' . print_r($trimmedAuthorName, true) . '</pre>';
+        echo '<pre>' . print_r($authorName, true) . '</pre>';
     }
 ?>
     <a href="./index.php">Main page</a><br>
