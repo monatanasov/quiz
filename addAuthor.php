@@ -16,18 +16,25 @@
     $authorName = trim($_POST['authorName']);
     $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$authorName'";
     $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
+    $errors = false;
+    $wrongAuthor = '';
         if (
             !mb_strlen($authorName) >= 1
             && !mb_strlen($authorName) <=255
         ) {
             echo 'Author name must be between 1 and 255 characters long!';
+            $errors = true;
         }
         if (mysqli_num_rows($authorCheckResult) >= 1){
             echo 'This Author already exists!'.'<br>';
+            $errors = true;
         } else {
             $insertAuthorSql = "INSERT INTO `authors`(`id`, `name`) VALUES (NULL,'$authorName')";
             $insertAuthorQuery = mysqli_query($conn,$insertAuthorSql);
-            echo 'Author ' . $authorName . ' was successfully added'.'<br>';
+            echo 'Author' . "<b>" . $authorName . "</b>" . 'was successfully added!'.'<br>';
+        }
+        if ($errors) {
+            $wrongAuthor = $authorName;
         }
     }
 ?>
@@ -37,7 +44,7 @@
             <h2>Add new author</h2>
         <div id="addAuthorDiv">
             <b><label for="">Author name</label></b>
-            <input type="text" class="addAuthorName" name="authorName" value="">
+            <?php echo '<input type="text" class="addAuthorName" name="authorName" value="'. $wrongAuthor .'">'?>
             <input type="submit" class="submitAuthor">
         </div>
     </form>
@@ -50,10 +57,11 @@
         //get all Authors from DB
         $showAllAuthorsTable = mysqli_query($conn,"SELECT * FROM `authors`");
         //show all Authors using HTML Table for better view
-        while($row=mysqli_fetch_assoc($showAllAuthorsTable)){
-            echo '<tr><td>'.$row['id'].'</td>
+        while ($row=mysqli_fetch_assoc($showAllAuthorsTable)) {
+            echo '<tr>
+                     <td>'.$row['id'].'</td>
                      <td>'.$row['name'].'</td>
-                    </tr>';
+                  </tr>';
         }
         ?>
     </table>
