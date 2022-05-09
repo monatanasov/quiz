@@ -42,8 +42,9 @@
     <a href="./binarymode.php">Binarymode quiz</a><br>
     <a href="./addQuote.php">Add Quote</a>
     <form action="addAuthor.php" method="POST">
-            <h2>Add new author</h2>
+        <h2>Add new author</h2>
         <div id="addAuthorDiv">
+            <!--     LABEL FOR ?????? what should I put there      -->
             <b><label for="">Author name</label></b>
             <?php echo '<input type="text" class="addAuthorName" name="authorName" value="'. $wrongAuthor .'">'?>
             <input type="submit" class="submitAuthor">
