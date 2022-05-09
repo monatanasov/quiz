@@ -11,7 +11,7 @@ $query=mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON author
         <th>Quote</th>
     </tr>
             <?php
-                while($row=mysqli_fetch_assoc($query)){
+                while ($row = mysqli_fetch_assoc($query)){
                     echo '<tr><td>'.$row['name'].'</td>
                               <td>'.$row['quote'].'</td>
                 </tr>';

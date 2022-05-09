@@ -23,6 +23,23 @@ mb_internal_encoding("UTF-8");
             <input type="submit" class="submitQuote">
         </div>
     </form>
+    <table border="1px solid black">
+        <tr>
+            <th>Author</th>
+            <th>Quote</th>
+        </tr>
+        <?php
+            $query = mysqli_query(
+                $conn,
+                "SELECT * FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id"
+            );
+            while ($row = mysqli_fetch_assoc($query)){
+                echo '<tr><td>' . $row['name'] . '</td>
+                     <td>' . $row['quote'] . '</td> 
+                      <tr>';
+            }
+        ?>
+    </table>
 
 </body>
 </html>
