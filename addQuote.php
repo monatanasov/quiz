@@ -16,6 +16,17 @@ while ($row = mysqli_fetch_assoc($DbAuthorNamesQuery)) {
     <title>Add Quote</title>
 </head>
 <body>
+    <?php
+    //TO DO - send to POST the selected Author from dropdown list
+    echo '<pre>' . print_r($_POST, true) . '</pre>';
+
+    /*      if ($_POST) {
+            $quoteTxt = trim($_POST[]);
+            if () {
+
+            }
+        }*/
+    ?>
     <a href="./index.php">Main page</a><br>
     <a href="./binarymode.php">Binarymode quiz</a><br>
     <a href="./addAuthor.php">Add Author</a>
@@ -57,6 +68,5 @@ while ($row = mysqli_fetch_assoc($DbAuthorNamesQuery)) {
             }
         ?>
     </table>
-
 </body>
 </html>
