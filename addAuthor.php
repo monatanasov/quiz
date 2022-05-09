@@ -12,12 +12,12 @@
 <body>
 
 <?php
+    $wrongAuthor = '';
     if ($_POST) {
     $authorName = trim($_POST['authorName']);
     $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$authorName'";
     $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
     $errors = false;
-    $wrongAuthor = '';
         if (
             !mb_strlen($authorName) >= 1
             && !mb_strlen($authorName) <=255
