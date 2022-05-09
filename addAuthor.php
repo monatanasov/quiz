@@ -1,8 +1,8 @@
 <?php
     include './dbconn.php';
+    //missing documentation
     mb_internal_encoding("UTF-8");
 ?>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8" >
@@ -10,25 +10,34 @@
     <title>Add Author</title>
 </head>
 <body>
-
 <?php
+    //That variable will be used to set the Value of the text field where AuthorNames are filled.
+    //Using this outside of POST puts blank name inside our input TEXT field for AuthorName
     $wrongAuthor = '';
     if ($_POST) {
+    //remove white spaces before and after filled AuthorName
     $authorName = trim($_POST['authorName']);
+    //check if our Author exists in DB.
+    //If there's a match mysqli_num_rows becomes 1 because our Authors are Unique
+    //mysqli_num_rows returns 0 if there's no match.
     $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$authorName'";
     $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
+    //this var will be used to check for Errors right before Inserting into DB
     $errors = false;
         if (
+            //missing documentation for mb_strlen
             !mb_strlen($authorName) >= 1
             && !mb_strlen($authorName) <=255
         ) {
             echo 'Author name must be between 1 and 255 characters long!';
             $errors = true;
         }
+        //return the text below as message to the user if he submits Author that already exists in DB
         if (mysqli_num_rows($authorCheckResult) >= 1){
             echo 'This Author already exists!' . '<br>';
             $errors = true;
         }
+        //if there are no errors - INSERT the new Author INTO DB
         if (!$errors) {
             $insertAuthorSql = "INSERT INTO `authors`(`id`, `name`) VALUES (NULL,'$authorName')";
             $insertAuthorQuery = mysqli_query($conn,$insertAuthorSql);
