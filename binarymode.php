@@ -25,7 +25,8 @@ while (
 </head>
 <body>
     <a href="./index.php">Main page</a><br>
-    <a href="addAuthor.php">Add Author</a>
+    <a href="addAuthor.php">Add Author</a><br>
+    <a href="./addQuote.php">Add Quote</a>
     <div class="binaryglobal">
         <a href="./binarymode.php">
             <div class="leftwireframe divs">

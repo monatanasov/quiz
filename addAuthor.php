@@ -39,7 +39,8 @@
     }
 ?>
     <a href="./index.php">Main page</a><br>
-    <a href="./binarymode.php">Binarymode quiz</a>
+    <a href="./binarymode.php">Binarymode quiz</a><br>
+    <a href="./addQuote.php">Add Quote</a>
     <form action="addAuthor.php" method="POST">
             <h2>Add new author</h2>
         <div id="addAuthorDiv">
