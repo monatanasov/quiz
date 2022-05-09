@@ -26,14 +26,14 @@
             $errors = true;
         }
         if (mysqli_num_rows($authorCheckResult) >= 1){
-            echo 'This Author already exists!'.'<br>';
+            echo 'This Author already exists!' . '<br>';
             $errors = true;
-        } else {
+        }
+        if (!$errors) {
             $insertAuthorSql = "INSERT INTO `authors`(`id`, `name`) VALUES (NULL,'$authorName')";
             $insertAuthorQuery = mysqli_query($conn,$insertAuthorSql);
-            echo 'Author' . "<b>" . $authorName . "</b>" . 'was successfully added!'.'<br>';
-        }
-        if ($errors) {
+            echo 'Author' . "<b>" . $authorName . "</b>" . 'was successfully added!' . '<br>';
+        } else {
             $wrongAuthor = $authorName;
         }
     }
