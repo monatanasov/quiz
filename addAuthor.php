@@ -32,7 +32,7 @@
         if (!$errors) {
             $insertAuthorSql = "INSERT INTO `authors`(`id`, `name`) VALUES (NULL,'$authorName')";
             $insertAuthorQuery = mysqli_query($conn,$insertAuthorSql);
-            echo 'Author' . "<b>" . $authorName . "</b>" . 'was successfully added!' . '<br>';
+            echo 'Author ' . "<b>" . $authorName . "</b>" . ' was successfully added!' . '<br>';
         } else {
             $wrongAuthor = $authorName;
         }
