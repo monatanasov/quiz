@@ -1,6 +1,6 @@
 <?php
 include 'dbconn.php';
-$query=mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id");
+$query = mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id");
 ?>
 <a href="./binarymode.php">Binarymode quiz</a><br>
 <a href="./addAuthor.php">Add Author</a><br>
@@ -12,8 +12,8 @@ $query=mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON author
     </tr>
             <?php
                 while ($row = mysqli_fetch_assoc($query)){
-                    echo '<tr><td>'.$row['name'].'</td>
-                              <td>'.$row['quote'].'</td>
+                    echo '<tr><td>' . $row['name'] . '</td>
+                              <td>' . $row['quote'] . '</td>
                 </tr>';
                 }
             ?>

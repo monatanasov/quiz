@@ -1,8 +1,11 @@
 <?php
 include './dbconn.php';
 mb_internal_encoding("UTF-8");
+$DbAuthorNamesQuery = mysqli_query($conn,"SELECT * FROM `authors`");
+while ($row = mysqli_fetch_assoc($DbAuthorNamesQuery)) {
+    $allAuthorNames[] = $row['name'];
+}
 ?>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8" >
@@ -19,7 +22,14 @@ mb_internal_encoding("UTF-8");
         <div id="addQuoteDiv">
             <!--     LABEL FOR ?????? what should I put there      -->
             <b><label for="">Add your Quote here</label> </b><br>
-            <?php echo '<textarea class="addQuoteTxt" name="quoteTxt" cols="40" rows="5"></textarea>'?><br>
+            <?php echo '<textarea class="addQuoteTxt" name="quoteTxt" cols="40" rows="5"></textarea><br>';?>
+            <b><label for="">Choose author name</label> </b>
+            <?php echo '<select>';
+            foreach($allAuthorNames as $key=>$authorNames){
+                echo '<option value="'.$key.'">'.$authorNames.'</option>'.'<br>';
+            }
+            echo '</select><br>';
+            ?>
             <input type="submit" class="submitQuote">
         </div>
     </form>
