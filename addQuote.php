@@ -38,8 +38,8 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             <?php
                 //display all Author Names inside dropdown select tag
                 echo '<select id="authorNameDropDown" name="selectedAuthorName">';
-                foreach($allAuthorNames as $key=>$authorNames){
-                    echo '<option value="'.$key.'">'.$authorNames.'</option>'.'<br>';
+                foreach($allAuthorNames as $key=>$authorName){
+                    echo '<option value="'.$key.'">'.$authorName.'</option>'.'<br>';
                 }
                 echo '</select><br>';
             ?>
