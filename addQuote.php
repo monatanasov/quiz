@@ -28,6 +28,14 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
                 echo "Quote length must be between 1 and 500 characters long!";
                 $errors = true;
             }
+            //Show error if someone SOMEHOW sends Author with ID larger than last author ID
+            if (
+               ((int)$selectedAuthorName) > (sizeof($allAuthorNames) - 1)
+            ) {
+                echo 'Your selected Author doesnt exist';
+                $errors = true;
+            }
+
         }
     echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>
