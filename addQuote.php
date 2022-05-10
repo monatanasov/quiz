@@ -19,7 +19,8 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
     <?php
           if ($_POST) {
             $quoteTxt = trim($_POST['quoteTxt']);
-            $selectedAuthorName = trim($_POST['selectedAuthorName']);
+            $selectedAuthorId = trim($_POST['selectedAuthorName']);
+            //TODO: change errors logic like Dodo suggested
             $errors = false;
             if (
                 !mb_strlen ($quoteTxt) >= 1
@@ -30,12 +31,17 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             }
             //Show error if someone SOMEHOW sends Author with ID larger than last author ID
             if (
-               ((int)$selectedAuthorName) > (sizeof($allAuthorNames) - 1)
+               ((int)$selectedAuthorId) > (sizeof($allAuthorNames) - 1)
             ) {
                 echo 'Your selected Author doesnt exist';
                 $errors = true;
             }
-
+            // TODO: fix INSERT quote INTO db
+            /*if (!$errors) {
+                $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES('.(int)$selectedAuthorId.','.$quoteTxt.')';
+                $insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
+                echo 'success';
+            }*/
         }
     echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>

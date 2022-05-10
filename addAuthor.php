@@ -23,6 +23,7 @@
     $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$authorName'";
     $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
     //this var will be used to check for Errors right before Inserting into DB
+    //TODO: change errors logic like Dodo suggested
     $errors = false;
         if (
             // TODO: missing documentation for mb_strlen
@@ -40,8 +41,8 @@
         //if there are no errors - INSERT the new Author INTO DB
         //mysqli_real_escape_string prevents SQL injection
         if (!$errors) {
-            $insertAuthorSql = 'INSERT INTO `authors`(`name`) VALUES ("'
-                 .mysqli_real_escape_string($conn,$authorName).'")';
+            $insertAuthorSql = 'INSERT INTO `authors`(`name`) VALUES ("'.
+                mysqli_real_escape_string($conn,$authorName).'")';
             $insertAuthorQuery = mysqli_query($conn,$insertAuthorSql);
             echo 'Author ' . "<b>" . $authorName . "</b>" . ' was successfully added!' . '<br>';
             //check if there are errors on INSERT query
