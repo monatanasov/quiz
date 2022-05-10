@@ -29,7 +29,7 @@
             !mb_strlen ($authorName) >= 1
             && !mb_strlen ($authorName) <=255
         ) {
-            echo 'Author name must be between 1 and 255 characters long!';
+            echo 'Author name must be between 1 and 255 characters long!<br>';
             $errors = true;
         }
         //return the text below as message to the user if he submits Author that already exists in DB
@@ -38,10 +38,17 @@
             $errors = true;
         }
         //if there are no errors - INSERT the new Author INTO DB
+        //mysqli_real_escape_string prevents SQL injection
         if (!$errors) {
-            $insertAuthorSql = "INSERT INTO `authors`(`id`, `name`) VALUES (NULL,'$authorName')";
+            $insertAuthorSql = 'INSERT INTO `authors`(`name`) VALUES ("'
+                 .mysqli_real_escape_string($conn,$authorName).'")';
             $insertAuthorQuery = mysqli_query($conn,$insertAuthorSql);
             echo 'Author ' . "<b>" . $authorName . "</b>" . ' was successfully added!' . '<br>';
+            //check if there are errors on INSERT query
+            if (mysqli_error($conn)){
+                echo 'Error on adding Author Name in DB';
+                exit;
+            }
         } else {
             $wrongAuthor = $authorName;
         }
