@@ -35,7 +35,6 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
         <div id="addQuoteDiv">
             <b><label for="addQuoteTxt">Add your Quote here</label> </b><br>
             <?php echo '<textarea class="addQuoteTxt" id="addQuoteTxt" name="quoteTxt" cols="40" rows="5"></textarea><br>';?>
-            <!--     LABEL FOR ?????? what should I put there      -->
             <b><label for="authorNameDropDown">Choose author name</label> </b>
             <?php
                 //display all Author Names inside dropdown select tag
