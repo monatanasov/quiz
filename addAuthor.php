@@ -1,6 +1,6 @@
 <?php
     include './dbconn.php';
-    //missing documentation
+    // TODO: missing documentation
     mb_internal_encoding("UTF-8");
 ?>
 <html lang="en">

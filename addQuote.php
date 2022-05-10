@@ -1,11 +1,11 @@
 <?php
 include './dbconn.php';
-//missing documentation
+// TODO: missing documentation
 mb_internal_encoding("UTF-8");
 //get all rows from Authors Table
-$DbAuthorNamesQuery = mysqli_query($conn,"SELECT * FROM `authors`");
+$dbAuthorNamesQuery = mysqli_query($conn,"SELECT * FROM `authors`");
 //put all records from Authors Table inside Array for later use
-while ($row = mysqli_fetch_assoc($DbAuthorNamesQuery)) {
+while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
     $allAuthorNames[] = $row['name'];
 }
 ?>
@@ -33,14 +33,13 @@ while ($row = mysqli_fetch_assoc($DbAuthorNamesQuery)) {
     <form action="addQuote.php" method="POST">
         <h2>Add new quote</h2>
         <div id="addQuoteDiv">
+            <b><label for="addQuoteTxt">Add your Quote here</label> </b><br>
+            <?php echo '<textarea class="addQuoteTxt" id="addQuoteTxt" name="quoteTxt" cols="40" rows="5"></textarea><br>';?>
             <!--     LABEL FOR ?????? what should I put there      -->
-            <b><label for="">Add your Quote here</label> </b><br>
-            <?php echo '<textarea class="addQuoteTxt" name="quoteTxt" cols="40" rows="5"></textarea><br>';?>
-            <!--     LABEL FOR ?????? what should I put there      -->
-            <b><label for="">Choose author name</label> </b>
+            <b><label for="authorNameDropDown">Choose author name</label> </b>
             <?php
                 //display all Author Names inside dropdown select tag
-                echo '<select>';
+                echo '<select id="authorNameDropDown">';
                 foreach($allAuthorNames as $key=>$authorNames){
                     echo '<option value="'.$key.'">'.$authorNames.'</option>'.'<br>';
                 }
