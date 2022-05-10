@@ -25,7 +25,7 @@
     //this var will be used to check for Errors right before Inserting into DB
     $errors = false;
         if (
-            //missing documentation for mb_strlen
+            // TODO: missing documentation for mb_strlen
             !mb_strlen($authorName) >= 1
             && !mb_strlen($authorName) <=255
         ) {
