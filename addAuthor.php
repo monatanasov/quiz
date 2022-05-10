@@ -26,8 +26,8 @@
     $errors = false;
         if (
             // TODO: missing documentation for mb_strlen
-            !mb_strlen($authorName) >= 1
-            && !mb_strlen($authorName) <=255
+            !mb_strlen ($authorName) >= 1
+            && !mb_strlen ($authorName) <=255
         ) {
             echo 'Author name must be between 1 and 255 characters long!';
             $errors = true;

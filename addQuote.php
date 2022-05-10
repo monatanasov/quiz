@@ -17,14 +17,19 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
 </head>
 <body>
     <?php
-    echo '<pre>' . print_r($_POST, true) . '</pre>';
-
-    /*      if ($_POST) {
-            $quoteTxt = trim($_POST[]);
-            if () {
-
+          if ($_POST) {
+            $quoteTxt = trim($_POST['quoteTxt']);
+            $selectedAuthorName = trim($_POST['selectedAuthorName']);
+            $errors = false;
+            if (
+                !mb_strlen ($quoteTxt) >= 1
+                && !mb_strlen ($quoteTxt) <= 500
+            ) {
+                echo "Quote length must be between 1 and 500 characters long!";
+                $errors = true;
             }
-        }*/
+        }
+    echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>
     <a href="./index.php">Main page</a><br>
     <a href="./binarymode.php">Binarymode quiz</a><br>
@@ -32,13 +37,13 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
     <form action="addQuote.php" method="POST">
         <h2>Add new quote</h2>
         <div id="addQuoteDiv">
-            <b><label for="addQuoteTxt">Add your Quote here</label> </b><br>
-            <?php echo '<textarea class="addQuoteTxt" id="addQuoteTxt" name="quoteTxt" cols="40" rows="5"></textarea><br>';?>
-            <b><label for="authorNameDropDown">Choose author name</label> </b>
+            <b><label for="addQuoteTxt">Add your Quote here</label></b><br>
+            <textarea class="addQuoteTxt" id="addQuoteTxt" name="quoteTxt" cols="40" rows="5"></textarea><br>
+            <b><label for="authorNameDropDown">Choose author name</label></b>
             <?php
                 //display all Author Names inside dropdown select tag
                 echo '<select id="authorNameDropDown" name="selectedAuthorName">';
-                foreach($allAuthorNames as $key=>$authorName){
+                foreach ($allAuthorNames as $key => $authorName) {
                     echo '<option value="' . $key . '">' . $authorName . '</option>'.'<br>';
                 }
                 echo '</select><br>';
