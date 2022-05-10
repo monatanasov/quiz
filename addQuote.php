@@ -17,7 +17,7 @@ while ($row = mysqli_fetch_assoc($DbAuthorNamesQuery)) {
 </head>
 <body>
     <?php
-    //TO DO - send to POST the selected Author from dropdown list
+    // TODO: send to POST the selected Author from dropdown list
     echo '<pre>' . print_r($_POST, true) . '</pre>';
 
     /*      if ($_POST) {
