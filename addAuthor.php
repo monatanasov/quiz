@@ -53,9 +53,8 @@
     <form action="addAuthor.php" method="POST">
         <h2>Add new author</h2>
         <div id="addAuthorDiv">
-            <!--     LABEL FOR ?????? what should I put there      -->
-            <b><label for="">Author name</label></b>
-            <?php echo '<input type="text" class="addAuthorName" name="authorName" value="'. $wrongAuthor .'">'?>
+            <b><label for="addAuthorName">Author name</label></b>
+            <?php echo '<input type="text" class="addAuthorName" id="addAuthorName" name="authorName" value="'. $wrongAuthor .'">'?>
             <input type="submit" class="submitAuthor">
         </div>
     </form>
