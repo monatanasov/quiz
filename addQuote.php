@@ -17,7 +17,6 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
 </head>
 <body>
     <?php
-    // TODO: send to POST the selected Author from dropdown list
     echo '<pre>' . print_r($_POST, true) . '</pre>';
 
     /*      if ($_POST) {
@@ -38,7 +37,7 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             <b><label for="authorNameDropDown">Choose author name</label> </b>
             <?php
                 //display all Author Names inside dropdown select tag
-                echo '<select id="authorNameDropDown">';
+                echo '<select id="authorNameDropDown" name="selectedAuthorName">';
                 foreach($allAuthorNames as $key=>$authorNames){
                     echo '<option value="'.$key.'">'.$authorNames.'</option>'.'<br>';
                 }
