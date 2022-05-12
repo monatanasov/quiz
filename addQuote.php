@@ -20,28 +20,34 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
           if ($_POST) {
             $quoteTxt = trim($_POST['quoteTxt']);
             $selectedAuthorId = trim($_POST['selectedAuthorName']);
+            $intSelectedAuthorId = (int)$selectedAuthorId;
             //TODO: change errors logic like Dodo suggested
-            $errors = false;
+            $errors = [];
             if (
                 !mb_strlen ($quoteTxt) >= 1
                 && !mb_strlen ($quoteTxt) <= 500
             ) {
-                echo "Quote length must be between 1 and 500 characters long!";
-                $errors = true;
+                $errors [] = 'Quote length must be between 1 and 500 characters long!<br>';
             }
             //Show error if someone SOMEHOW sends Author with ID larger than last author ID
             if (
-               ((int)$selectedAuthorId) > (sizeof($allAuthorNames) - 1)
+               $intSelectedAuthorId > (sizeof($allAuthorNames) - 1)
             ) {
-                echo 'Your selected Author doesnt exist';
-                $errors = true;
+                $errors [] = 'Your selected Author doesnt exist<br>';
             }
             // TODO: fix INSERT quote INTO db
-            /*if (!$errors) {
-                $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES('.(int)$selectedAuthorId.','.$quoteTxt.')';
+            if (empty($errors)) {
+                $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES("' . $intSelectedAuthorId . ',' . $quoteTxt . '")';
                 $insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
                 echo 'success';
-            }*/
+            } else {
+                if (is_array($errors)) {
+                    foreach ($errors as $error) {
+                        echo $error;
+                    }
+                }
+            }
+            var_dump($intSelectedAuthorId);
         }
     echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>
