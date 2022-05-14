@@ -6,7 +6,7 @@ mb_internal_encoding("UTF-8");
 $dbAuthorNamesQuery = mysqli_query($conn,"SELECT * FROM `authors`");
 //put all records from Authors Table inside Array for later use
 while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
-    $allAuthorNames[] = $row['name'];
+    $allAuthors[] = $row;
 }
 ?>
 <html lang="en">
@@ -17,39 +17,32 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
 </head>
 <body>
     <?php
-          if ($_POST) {
+        if ($_POST) {
             $quoteTxt = trim($_POST['quoteTxt']);
-            $selectedAuthorId = trim($_POST['selectedAuthorName']);
-            $intSelectedAuthorId = (int)$selectedAuthorId;
-            //TODO: change errors logic like Dodo suggested
+            $intSelectedAuthorId = (int) trim($_POST['selectedAuthorName']);
             $errors = [];
-            if (
-                !mb_strlen ($quoteTxt) >= 1
-                && !mb_strlen ($quoteTxt) <= 500
-            ) {
-                $errors [] = 'Quote length must be between 1 and 500 characters long!<br>';
+            $strLength = !mb_strlen($quoteTxt);
+
+            if ($strLength >= 1 && $strLength <= 500) {
+                $errors[] = 'Quote length must be between 1 and 500 characters long!<br>';
             }
-            //Show error if someone SOMEHOW sends Author with ID larger than last author ID
-            if (
-               $intSelectedAuthorId > (sizeof($allAuthorNames) - 1)
-            ) {
+
+            $authorCheckQuery = "SELECT * FROM `authors` WHERE `id` = $intSelectedAuthorId";
+            $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
+            if (mysqli_num_rows($authorCheckResult) === 0) {
                 $errors [] = 'Your selected Author doesnt exist<br>';
             }
-            // TODO: fix INSERT quote INTO db
+
             if (empty($errors)) {
-                $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES("' . $intSelectedAuthorId . ',' . $quoteTxt . '")';
+                $insertQuoteSql = "INSERT INTO `quotes` (`author_id`, `quote`) VALUES($intSelectedAuthorId, '$quoteTxt')";
                 $insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
                 echo 'success';
             } else {
-                if (is_array($errors)) {
-                    foreach ($errors as $error) {
-                        echo $error;
-                    }
+                foreach ($errors as $error) {
+                    echo $error;
                 }
             }
-            var_dump($intSelectedAuthorId);
         }
-    echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>
     <a href="./index.php">Main page</a><br>
     <a href="./binarymode.php">Binarymode quiz</a><br>
@@ -63,8 +56,8 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             <?php
                 //display all Author Names inside dropdown select tag
                 echo '<select id="authorNameDropDown" name="selectedAuthorName">';
-                foreach ($allAuthorNames as $key => $authorName) {
-                    echo '<option value="' . $key . '">' . $authorName . '</option>'.'<br>';
+                foreach ($allAuthors as $key => $author) {
+                    echo '<option value="' . $author['id'] . '">' . $author['name'] . '</option>'.'<br>';
                 }
                 echo '</select><br>';
             ?>
@@ -80,13 +73,16 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             //get all Quotes from DB
             $query = mysqli_query(
                 $conn,
-                "SELECT * FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id"
+                "SELECT * FROM `quotes`
+                        LEFT JOIN `authors` ON authors.id = quotes.author_id
+                        ORDER BY authors.name ASC"
             );
+
             //show all Quotes using HTML Table for better view
             while ($row = mysqli_fetch_assoc($query)){
                 echo '<tr><td>' . $row['name'] . '</td>
                      <td>' . $row['quote'] . '</td> 
-                      <tr>';
+                     <tr>';
             }
         ?>
     </table>
