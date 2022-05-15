@@ -29,8 +29,7 @@
             // this var will be used to check for Errors right before Inserting into DB
             $errors = [];
 
-                if (!$authorNameLength >= 1 && !$authorNameLength <=255
-                ) {
+                if (!$authorNameLength >= 1 && !$authorNameLength <=255) {
                     $errors[] = 'Author name must be between 1 and 255 characters long!' . '<br>';
                 }
 
