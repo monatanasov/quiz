@@ -20,20 +20,19 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
           if ($_POST) {
             $quoteTxt = trim($_POST['quoteTxt']);
             $selectedAuthorId = (int) trim($_POST['selectedAuthorName']);
-            // TODO: change errors logic like Dodo suggested
+            $quoteCheckQuery = "SELECT * FROM `quotes` WHERE `quote` = '$quoteTxt'";
+            $quoteCheckResult = mysqli_query($conn,$quoteCheckQuery);
             $errors = [];
-            if (
-                !mb_strlen ($quoteTxt) >= 1
-                && !mb_strlen ($quoteTxt) <= 500
-            ) {
-                $errors [] = 'Quote length must be between 1 and 500 characters long!<br>';
+            $quoteLength = mb_strlen ($quoteTxt);
+
+
+            if (!$quoteLength >= 1 && !$quoteLength <= 500) {
+                $errors[] = 'Quote length must be between 1 and 500 characters long!<br>';
             }
-            //Show error if someone SOMEHOW sends Author with ID larger than last author ID
-           /* if (
-                $selectedAuthorId > (sizeof($allAuthors) - 1)
-            ) {
-                $errors [] = 'Your selected Author doesnt exist<br>';
-            }*/
+
+            if (mysqli_num_rows($quoteCheckResult) >= 1) {
+                $errors[] = 'This quote already exists<br>';
+            }
 
             if (empty($errors)) {
                 $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES('.
@@ -49,7 +48,6 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
                 }
             }
         }
-    echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>
     <a href="./index.php">Main page</a><br>
     <a href="./binarymode.php">Binarymode quiz</a><br>
