@@ -2,9 +2,9 @@
 include './dbconn.php';
 // TODO: missing documentation
 mb_internal_encoding("UTF-8");
-//get all rows from Authors Table
+// get all rows from Authors Table
 $dbAuthorNamesQuery = mysqli_query($conn,"SELECT * FROM `authors`");
-//put all records from Authors Table inside Array for later use
+// put all records from Authors Table inside Array for later use
 while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
     $allAuthors[] = $row;
 }
@@ -20,7 +20,7 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
           if ($_POST) {
             $quoteTxt = trim($_POST['quoteTxt']);
             $selectedAuthorId = (int) trim($_POST['selectedAuthorName']);
-            //TODO: change errors logic like Dodo suggested
+            // TODO: change errors logic like Dodo suggested
             $errors = [];
             if (
                 !mb_strlen ($quoteTxt) >= 1
@@ -48,7 +48,6 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
                     }
                 }
             }
-              //echo '<pre>' . print_r($insertQuoteSql, true) . '</pre>';
         }
     echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>
@@ -62,7 +61,7 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             <textarea class="addQuoteTxt" id="addQuoteTxt" name="quoteTxt" cols="40" rows="5"></textarea><br>
             <b><label for="authorNameDropDown">Choose author name</label></b>
             <?php
-                //display all Author Names inside dropdown select tag
+                // display all Author Names inside dropdown select tag
                 echo '<select id="authorNameDropDown" name="selectedAuthorName">';
                 foreach ($allAuthors as $key => $author) {
                     echo '<option value="' . $author['id'] . '">' . $author['name'] . '</option>'.'<br>';
@@ -78,12 +77,12 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             <th>Quote</th>
         </tr>
         <?php
-            //get all Quotes from DB
+            // get all Quotes from DB
             $query = mysqli_query(
                 $conn,
                 "SELECT * FROM `quotes` LEFT JOIN `authors` ON quotes.author_id = authors.id ORDER BY name ASC"
             );
-            //show all Quotes using HTML Table for better view
+            // show all Quotes using HTML Table for better view
             while ($row = mysqli_fetch_assoc($query)){
                 echo '<tr><td>' . $row['name'] . '</td>
                      <td>' . $row['quote'] . '</td> 
