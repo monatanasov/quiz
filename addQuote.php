@@ -37,7 +37,8 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
 
             if (empty($errors)) {
                 $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES('.
-                    $selectedAuthorId.',"'.$quoteTxt.'")';
+                    mysqli_real_escape_string($conn,$selectedAuthorId).',"'.
+                    mysqli_real_escape_string($conn,$quoteTxt).'")';
                 $insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
                 echo 'success';
             } else {
