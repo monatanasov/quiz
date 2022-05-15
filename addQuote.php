@@ -81,7 +81,7 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             //get all Quotes from DB
             $query = mysqli_query(
                 $conn,
-                "SELECT * FROM `quotes` LEFT JOIN `authors` ON quotes.author_id = authors.id"
+                "SELECT * FROM `quotes` LEFT JOIN `authors` ON quotes.author_id = authors.id ORDER BY name ASC"
             );
             //show all Quotes using HTML Table for better view
             while ($row = mysqli_fetch_assoc($query)){
