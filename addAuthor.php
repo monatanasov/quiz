@@ -23,7 +23,6 @@
     $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$authorName'";
     $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
     //this var will be used to check for Errors right before Inserting into DB
-    //TODO: change errors logic like Dodo suggested
     $errors = [];
         if (
             // TODO: missing documentation for mb_strlen

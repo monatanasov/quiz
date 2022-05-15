@@ -6,7 +6,7 @@ mb_internal_encoding("UTF-8");
 $dbAuthorNamesQuery = mysqli_query($conn,"SELECT * FROM `authors`");
 //put all records from Authors Table inside Array for later use
 while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
-    $allAuthorNames[] = $row['name'];
+    $allAuthors[] = $row;
 }
 ?>
 <html lang="en">
@@ -19,8 +19,7 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
     <?php
           if ($_POST) {
             $quoteTxt = trim($_POST['quoteTxt']);
-            $selectedAuthorId = trim($_POST['selectedAuthorName']);
-            $intSelectedAuthorId = (int)$selectedAuthorId;
+            $selectedAuthorId = (int) trim($_POST['selectedAuthorName']);
             //TODO: change errors logic like Dodo suggested
             $errors = [];
             if (
@@ -31,14 +30,18 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             }
             //Show error if someone SOMEHOW sends Author with ID larger than last author ID
             if (
-               $intSelectedAuthorId > (sizeof($allAuthorNames) - 1)
+                $selectedAuthorId > (sizeof($allAuthors) - 1)
             ) {
                 $errors [] = 'Your selected Author doesnt exist<br>';
             }
             // TODO: fix INSERT quote INTO db
+
             if (empty($errors)) {
-                $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES("' . $intSelectedAuthorId . ',' . $quoteTxt . '")';
-                $insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
+                // $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES(\'1\',\'test\')';
+                // $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES(\''. $intSelectedAuthorId .'\',\'test\')';
+                // \''. $intSelectedAuthorId .'\'
+                $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES('.$selectedAuthorId.',"'.$quoteTxt.'"   )';
+                //$insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
                 echo 'success';
             } else {
                 if (is_array($errors)) {
@@ -47,7 +50,8 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
                     }
                 }
             }
-            var_dump($intSelectedAuthorId);
+              echo '<pre>' . print_r($insertQuoteSql, true) . '</pre>';
+            var_dump($quoteTxt);
         }
     echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>
@@ -63,8 +67,8 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             <?php
                 //display all Author Names inside dropdown select tag
                 echo '<select id="authorNameDropDown" name="selectedAuthorName">';
-                foreach ($allAuthorNames as $key => $authorName) {
-                    echo '<option value="' . $key . '">' . $authorName . '</option>'.'<br>';
+                foreach ($allAuthors as $key => $author) {
+                    echo '<option value="' . $author['id'] . '">' . $author['name'] . '</option>'.'<br>';
                 }
                 echo '</select><br>';
             ?>
