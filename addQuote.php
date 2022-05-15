@@ -29,19 +29,16 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
                 $errors [] = 'Quote length must be between 1 and 500 characters long!<br>';
             }
             //Show error if someone SOMEHOW sends Author with ID larger than last author ID
-            if (
+           /* if (
                 $selectedAuthorId > (sizeof($allAuthors) - 1)
             ) {
                 $errors [] = 'Your selected Author doesnt exist<br>';
-            }
-            // TODO: fix INSERT quote INTO db
+            }*/
 
             if (empty($errors)) {
-                // $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES(\'1\',\'test\')';
-                // $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES(\''. $intSelectedAuthorId .'\',\'test\')';
-                // \''. $intSelectedAuthorId .'\'
-                $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES('.$selectedAuthorId.',"'.$quoteTxt.'"   )';
-                //$insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
+                $insertQuoteSql = 'INSERT INTO `quotes`(`author_id`,`quote`) VALUES('.
+                    $selectedAuthorId.',"'.$quoteTxt.'")';
+                $insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
                 echo 'success';
             } else {
                 if (is_array($errors)) {
@@ -50,8 +47,7 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
                     }
                 }
             }
-              echo '<pre>' . print_r($insertQuoteSql, true) . '</pre>';
-            var_dump($quoteTxt);
+              //echo '<pre>' . print_r($insertQuoteSql, true) . '</pre>';
         }
     echo '<pre>' . print_r($_POST, true) . '</pre>';
     ?>
@@ -84,7 +80,7 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             //get all Quotes from DB
             $query = mysqli_query(
                 $conn,
-                "SELECT * FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id"
+                "SELECT * FROM `quotes` LEFT JOIN `authors` ON quotes.author_id = authors.id"
             );
             //show all Quotes using HTML Table for better view
             while ($row = mysqli_fetch_assoc($query)){
