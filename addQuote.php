@@ -25,7 +25,6 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             $errors = [];
             $quoteLength = mb_strlen ($quoteTxt);
 
-
             if (!$quoteLength >= 1 && !$quoteLength <= 500) {
                 $errors[] = 'Quote length must be between 1 and 500 characters long!<br>';
             }
@@ -41,10 +40,8 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
                 $insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
                 echo 'success';
             } else {
-                if (is_array($errors)) {
-                    foreach ($errors as $error) {
-                        echo $error;
-                    }
+                foreach ($errors as $error) {
+                    echo $error;
                 }
             }
         }
