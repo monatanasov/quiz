@@ -30,8 +30,8 @@
             $showAllAuthorsTable = mysqli_query($conn, "SELECT * FROM `authors`");
             while ($row = mysqli_fetch_assoc($showAllAuthorsTable)) {
                 echo '<tr>
-                         <td>'.$row['id'].'</td>
-                         <td>'.$row['name'].'</td>
+                         <td><a href="./createAuthor.php?id='.$row['id'].'">'.$row['id'].'</a></td>
+                         <td><a href="./editAuthor.php?id='.$row['id'].'">'.$row['name'].'</a></td>
                       </tr>';
             }
         ?>
