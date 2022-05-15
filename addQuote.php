@@ -1,13 +1,13 @@
 <?php
-include './dbconn.php';
-// TODO: missing documentation
-mb_internal_encoding("UTF-8");
-// get all rows from Authors Table
-$dbAuthorNamesQuery = mysqli_query($conn,"SELECT * FROM `authors`");
-// put all records from Authors Table inside Array for later use
-while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
-    $allAuthors[] = $row;
-}
+    include './dbconn.php';
+    // Set internal character encoding to UTF-8
+    mb_internal_encoding("UTF-8");
+    // get all rows from Authors Table
+    $dbAuthorNamesQuery = mysqli_query($conn,"SELECT * FROM `authors`");
+    // put all records from Authors Table inside Array for later use
+    while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
+        $allAuthors[] = $row;
+    }
 ?>
 <html lang="en">
 <head>
@@ -23,6 +23,8 @@ while ($row = mysqli_fetch_assoc($dbAuthorNamesQuery)) {
             $quoteCheckQuery = "SELECT * FROM `quotes` WHERE `quote` = '$quoteTxt'";
             $quoteCheckResult = mysqli_query($conn,$quoteCheckQuery);
             $errors = [];
+            // mb_strlen require the string length showing number of characters instead of
+            // strlen which showing number of bytes
             $quoteLength = mb_strlen ($quoteTxt);
 
             if (!$quoteLength >= 1 && !$quoteLength <= 500) {
