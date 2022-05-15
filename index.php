@@ -4,6 +4,7 @@ $query = mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON auth
 ?>
 <a href="./binarymode.php">Binarymode quiz</a><br>
 <a href="./addAuthor.php">Add Author</a><br>
+<a href="./authors/index.php">Authors</a><br>
 <a href="./addQuote.php">Add Quote</a>
 <table border="1px solid black">
     <tr>
