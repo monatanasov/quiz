@@ -28,11 +28,11 @@
             $quoteLength = mb_strlen ($quoteTxt);
 
             if (!$quoteLength >= 1 && !$quoteLength <= 500) {
-                $errors[] = 'Quote length must be between 1 and 500 characters long!<br>';
+                $errors[] = 'Quote length must be between 1 and 500 characters long!' . '<br>';
             }
 
             if (mysqli_num_rows($quoteCheckResult) >= 1) {
-                $errors[] = 'This quote already exists<br>';
+                $errors[] = 'This quote already exists' . '<br>';
             }
 
             if (empty($errors)) {
@@ -40,7 +40,7 @@
                     mysqli_real_escape_string($conn,$selectedAuthorId).',"'.
                     mysqli_real_escape_string($conn,$quoteTxt).'")';
                 $insertQuoteQuery = mysqli_query($conn,$insertQuoteSql);
-                echo 'success';
+                echo 'Your Quote was successfully added' . '<br>';
             } else {
                 foreach ($errors as $error) {
                     echo $error;
@@ -61,7 +61,7 @@
                 // display all Author Names inside dropdown select tag
                 echo '<select id="authorNameDropDown" name="selectedAuthorName">';
                 foreach ($allAuthors as $key => $author) {
-                    echo '<option value="' . $author['id'] . '">' . $author['name'] . '</option>'.'<br>';
+                    echo '<option value="' . $author['id'] . '">' . $author['name'] . '</option>' . '<br>';
                 }
                 echo '</select><br>';
             ?>

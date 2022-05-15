@@ -31,12 +31,12 @@
 
                 if (!$authorNameLength >= 1 && !$authorNameLength <=255
                 ) {
-                    $errors[] = 'Author name must be between 1 and 255 characters long!<br>';
+                    $errors[] = 'Author name must be between 1 and 255 characters long!' . '<br>';
                 }
 
                 // return the text below as message to the user if he submits Author that already exists in DB
                 if (mysqli_num_rows($authorCheckResult) >= 1) {
-                    $errors[] = 'This Author already exists!<br>';
+                    $errors[] = 'This Author already exists!' . '<br>';
                 }
 
                 // if there are no errors - INSERT the new Author INTO DB
@@ -49,7 +49,7 @@
 
                     // check if there are errors on INSERT query
                     if (mysqli_error($conn)) {
-                        echo 'Error on adding Author Name in DB';
+                        echo 'Error on adding Author Name in DB' . '<br>';
                         exit;
                     }
                 } else {
