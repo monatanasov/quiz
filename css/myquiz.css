@@ -1,39 +1,67 @@
 div.binaryglobal{
-    border:5px solid black;padding:16px ;margin-bottom:16px;width:15%;padding-bottom: 80px;
+    border:5px solid black;
+    padding:16px;
+    margin-bottom:16px;
+    width:15%;
+    min-width: 350px;
+    padding-bottom:80px;
 }
 div.leftwireframe {
-    border:1px solid lightgray;padding:16px;margin-bottom:16px;width:40%;float:left;background-color:#d3d3d3;
+    border:1px solid lightgray;
+    padding:16px;
+    margin-bottom:16px;
+    width:40%;
+    float:left;
+    background-color:#d3d3d3;
 }
 div.rightwireframe {
-    border:1px solid lightgray;padding:16px;margin-bottom:16px;width:40%;float:right;
+    border:1px solid lightgray;
+    padding:16px;
+    margin-bottom:16px;
+    width:40%;
+    float:right;
 }
 div.binaryquote {
-    border:1px solid lightgray;padding:16px;margin-bottom:16px;width:auto;clear:both;background-color:#FFB6C1;
+    border:1px solid lightgray;
+    padding:16px;
+    margin-bottom:16px;
+    width:auto;
+    clear:both;
+    background-color:#FFB6C1;
 }
 div.binaryauthor {
-    padding:16px;margin-bottom:16px;width:auto;text-align:center;clear:both;
+    padding:16px;
+    margin-bottom:16px;
+    width:auto;
+    text-align:center;
+    clear:both;
 }
-img{
+img {
     width: 50px;
     height: 50px;
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
-
-.button{
+.button {
     padding: 15px 32px;
     border-radius: 12px;
     position:relative;
 }
-.yesbutton{
+.yesbutton {
     background-color: #4CAF50;
     float:left;
 }
-.nobutton{
+.nobutton {
     background-color:#FF0000;
     float:right;
 }
-.color{
+.color {
     background-color: #FF0000;
+}
+.hidden {
+    display:none;
+}
+.notHidden {
+    display:block;
 }
