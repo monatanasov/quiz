@@ -60,6 +60,7 @@
                         echo $error;
                     }
                 }
+                session_destroy();
             }
         ?>
         <form action="editAuthor.php" method="POST">
