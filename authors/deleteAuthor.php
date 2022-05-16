@@ -38,6 +38,8 @@
                     echo 'No database connection in deleteAuthor page';
                     exit;
                 }
+                // TODO: sess_dest here?
+                session_destroy();
             }
         ?>
         <form action="deleteAuthor.php" method="POST">
