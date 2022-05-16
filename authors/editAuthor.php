@@ -14,7 +14,7 @@
         <a href="./index.php">Authors</a><br>
 
         <?php
-            //set blank name when submitting the form / $_POST
+            // set blank name on input text field when submitting the form / $_POST
             $editableAuthorName = '';
 
             if ($_GET) {
@@ -24,15 +24,15 @@
 
                 while ($row = mysqli_fetch_assoc($authorNameQuery)) {
                     $editableAuthorName = $row['name'];
-                    $_SESSION['authorId'] = (int) $row['id'];
+                    $_SESSION['editableAuthorId'] = (int) $row['id'];
                 }
 
             } else if ($_POST) {
                 $postAuthorName = trim($_POST['authorName']);
-                $authorId = $_SESSION['authorId'];
+                $authorId = $_SESSION['editableAuthorId'];
                 $updateAuthorSql = "UPDATE `authors` SET `name`='$postAuthorName' WHERE `id` = $authorId";
                 mysqli_query($conn,$updateAuthorSql);
-                echo 'Your Author was successfully edited';
+                echo 'Your Author was successfully edited!';
 
                 if (mysqli_error($conn)) {
                     echo 'No database connection in editAuthor page';
@@ -42,11 +42,11 @@
         ?>
         <form action="editAuthor.php" method="POST">
             <h2>Edit Author</h2>
-            <div id="addAuthorDiv">
+            <div id="editAuthorDiv">
                 <b><label for="editAuthorName">Author name</label></b>
                 <?php echo '<input type="text" class="editAuthorName" id="editAuthorName" name="authorName" value="'.
                     $editableAuthorName .'">'?>
-                <input type="submit" class="submitAuthor">
+                <input type="submit" class="editAuthor">
             </div>
         </form>
     </body>

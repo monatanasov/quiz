@@ -64,7 +64,7 @@
 
         <form action="createAuthor.php" method="POST">
             <h2>Create Author</h2>
-            <div id="addAuthorDiv">
+            <div id="createAuthorDiv">
                 <b><label for="createAuthorName">Author name</label></b>
                 <?php echo '<input type="text" class="createAuthorName" id="createAuthorName" name="authorName" value="'. $wrongAuthor .'">'?>
                 <input type="submit" class="submitAuthor">
