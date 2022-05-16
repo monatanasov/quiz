@@ -50,7 +50,7 @@
 
                     // check if there are errors on INSERT query
                     if (mysqli_error($conn)) {
-                        echo 'Error on adding Author Name in DB' . '<br>';
+                        echo 'No database connection in createAuthor page' . '<br>';
                         exit;
                     }
                 } else {
@@ -65,8 +65,8 @@
         <form action="createAuthor.php" method="POST">
             <h2>Create Author</h2>
             <div id="addAuthorDiv">
-                <b><label for="addAuthorName">Author name</label></b>
-                <?php echo '<input type="text" class="addAuthorName" id="addAuthorName" name="authorName" value="'. $wrongAuthor .'">'?>
+                <b><label for="createAuthorName">Author name</label></b>
+                <?php echo '<input type="text" class="createAuthorName" id="createAuthorName" name="authorName" value="'. $wrongAuthor .'">'?>
                 <input type="submit" class="submitAuthor">
             </div>
         </form>
