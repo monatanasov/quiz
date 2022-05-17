@@ -2,7 +2,6 @@
     include '../dbconn.php';
     mb_internal_encoding("UTF-8");
 ?>
-
 <html lang="en">
     <head>
         <meta charset="UTF-8" >
@@ -61,7 +60,6 @@
                 }
             }
         ?>
-
         <form action="createAuthor.php" method="POST">
             <h2>Create Author</h2>
             <div id="createAuthorDiv">
