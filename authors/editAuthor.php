@@ -36,7 +36,6 @@
                 $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$postAuthorName'";
                 $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
 
-
                 if (!$authorNameLength >= 1 && !$authorNameLength <=255) {
                     $errors[] =  'Author name must be between 1 and 255 characters long!' . '<br>';
                 }
