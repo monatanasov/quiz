@@ -46,7 +46,7 @@
             <div id="deleteAuthorDiv">
                 <b><label for="deleteAuthorName">Author for deletion</label></b>
                 <?php echo '<input type="text" class="deleteAuthorName" id="deleteAuthorName" name="authorName" value="' . $deletableAuthorName . '" readonly>'?>
-                <input type="submit" class="deleteAuthor">
+                <input type="submit" onclick="return confirm('Are you sure? This action cannot be undone!')" class="deleteAuthor" >
             </div>
         </form>
     </body>
