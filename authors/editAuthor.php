@@ -68,7 +68,7 @@
                 <b><label for="editAuthorName">Author name</label></b>
                 <?php echo '<input type="text" class="editAuthorName" id="editAuthorName" name="authorName" value="'.
                     $editableAuthorName .'">'?>
-                <input type="submit" class="editAuthor">
+                <input type="submit" class="editAuthor" value="Edit">
             </div>
         </form>
     </body>

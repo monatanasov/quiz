@@ -67,7 +67,7 @@
             <div id="createAuthorDiv">
                 <b><label for="createAuthorName">Author name</label></b>
                 <?php echo '<input type="text" class="createAuthorName" id="createAuthorName" name="authorName" value="'. $wrongAuthor .'">'?>
-                <input type="submit" class="submitAuthor">
+                <input type="submit" class="submitAuthor" value="Create">
             </div>
         </form>
     </body>
