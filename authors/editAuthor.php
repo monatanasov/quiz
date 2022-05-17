@@ -53,13 +53,13 @@
                         echo 'No database connection in editAuthor page';
                         exit;
                     }
+                    session_destroy(); // TODO: sess_dest here?
                 } else {
                     $editableAuthorName = $postAuthorName;
                     foreach ($errors as $error) {
                         echo $error;
                     }
                 }
-                session_destroy();
             }
         ?>
         <form action="editAuthor.php" method="POST">
