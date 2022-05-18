@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("localhost", "homestead", "secret", "quiz");
+$conn = new mysqli("localhost", "root", "rootroot", "quiz");
 mysqli_set_charset($conn, 'utf8');
 
 if (mysqli_connect_errno()) {

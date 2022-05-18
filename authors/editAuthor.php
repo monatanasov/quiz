@@ -27,6 +27,8 @@
                     $_SESSION['editableAuthorId'] = (int) $row['id'];
                 }
 
+                // TODO: check if exists
+
             } else if ($_POST) {
                 $errors = [];
                 $postAuthorName = trim($_POST['authorName']);
@@ -53,7 +55,6 @@
                         echo 'No database connection in editAuthor page';
                         exit;
                     }
-                    session_destroy(); // TODO: sess_dest here?
                 } else {
                     $editableAuthorName = $postAuthorName;
                     foreach ($errors as $error) {
@@ -68,7 +69,7 @@
                 <b><label for="editAuthorName">Author name</label></b>
                 <?php echo '<input type="text" class="editAuthorName" id="editAuthorName" name="authorName" value="'.
                     $editableAuthorName .'">'?>
-                <input type="submit" class="editAuthor" value="Edit">
+                <input type="submit" class="editAuthor" value="Update">
             </div>
         </form>
     </body>

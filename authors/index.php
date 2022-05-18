@@ -9,7 +9,7 @@
 
     include '../dbconn.php';
     mb_internal_encoding("UTF-8");
-
+    session_start();
 ?>
 
 <html lang="en">
@@ -19,6 +19,13 @@
         <title>CRUD Authors</title>
     </head>
     <body>
+        <?php
+            if (isset($_SESSION['message'])) {
+                echo '<p>MESSAGE: '. $_SESSION['message'] .'</p>';
+            }
+        ?>
+
+
         <a href="./createAuthor.php">Create Author</a><br>
         <table border = "1px solid black">
             <tr>
@@ -29,8 +36,8 @@
                 $showAllAuthorsTable = mysqli_query($conn, "SELECT * FROM `authors`");
                 while ($row = mysqli_fetch_assoc($showAllAuthorsTable)) {
                     echo '<tr>
-                             <td><a href="./deleteAuthor.php?id='.$row['id'].'">'.$row['id'].'</a></td>
-                             <td><a href="./editAuthor.php?id='.$row['id'].'">'.$row['name'].'</a></td>
+                             <td><a href="./show.php?id='.$row['id'].'">'.$row['id'].'</a></td>
+                             <td><a href="./show.php?id='.$row['id'].'">'.$row['name'].'</a></td>
                           </tr>';
                 }
             ?>
