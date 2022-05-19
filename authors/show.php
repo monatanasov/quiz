@@ -14,7 +14,7 @@
 
         <?php
             // set blank name on input text field when submitting the form / $_POST
-            $editableAuthorName = '';
+            $authorName = '';
 
             if ($_GET) {
                 $intGetAuthorId = (int)$_GET['id'];
@@ -22,20 +22,12 @@
                 $authorNameQuery = mysqli_query($conn, $authorNameSql);
 
                 while ($row = mysqli_fetch_assoc($authorNameQuery)) {
-                    $editableAuthorName = $row['name'];
-                    $_SESSION['editableAuthorId'] = (int)$row['id'];
+                    $authorName = $row['name'];
+                    $authorId = (int)$row['id'];
                 }
             }
+
+            echo '<p>Name: '. $authorName .' </p>';
         ?>
     </body>
 </html>
-
-<form action="showAuthor.php" method="POST">
-    <h2>Author info</h2>
-    <div id="showAuthorDiv">
-        <?php
-            echo '<p></p>';
-        ?>
-        <input type="submit" class="editAuthor" value="Edit">
-    </div>
-</form>
