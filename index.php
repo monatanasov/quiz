@@ -1,6 +1,6 @@
 <?php
 include 'dbconn.php';
-$query = mysqli_query($conn, "SELECT * FROM `authors` LEFT JOIN `quotes` ON authors.id=quotes.author_id");
+$query = mysqli_query($conn, "SELECT * FROM `quotes` LEFT JOIN `authors` ON quotes.author_id=authors.id");
 ?>
 <a href="./binarymode.php">Binarymode quiz</a><br>
 <a href="./addAuthor.php">Add Author</a><br>
