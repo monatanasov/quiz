@@ -6,10 +6,9 @@
     // edit author
     // update - endpoint
     // destroy - endpoint
-
+    session_start();
     include '../dbconn.php';
     mb_internal_encoding("UTF-8");
-
 ?>
 
 <html lang="en">
@@ -26,6 +25,7 @@
                 <th>Author Name</th>
             </tr>
             <?php
+                echo $_SESSION['message'];
                 $showAllAuthorsTable = mysqli_query($conn, "SELECT * FROM `authors`");
                 while ($row = mysqli_fetch_assoc($showAllAuthorsTable)) {
                     echo '<tr>
@@ -34,7 +34,7 @@
                     echo '<td><input type="submit" class="deleteAuthor" value="delete"></td>';
                     echo '</tr>';
                 }
-            echo '<pre>' . print_r($_POST, true) . '</pre>';
+            echo '<pre>' . print_r($_SESSION['message'], true) . '</pre>';
             ?>
         </table>
     </body>
