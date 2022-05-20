@@ -30,14 +30,12 @@
                 while ($row = mysqli_fetch_assoc($showAllAuthorsTable)) {
                     echo '<tr>
                              <td><a href="./show.php?id='.$row['id'].'">'.$row['id'].'</a></td>
-                             <td><a href="./show.php?id='.$row['id'].'">'.$row['name'].'</a></td>
-                          </tr>';
+                             <td><a href="./show.php?id='.$row['id'].'">'.$row['name'].'</a></td>';
+                    echo '<td><input type="submit" class="deleteAuthor" value="delete"></td>';
+                    echo '</tr>';
                 }
+            echo '<pre>' . print_r($_POST, true) . '</pre>';
             ?>
         </table>
-
-        <h3>To delete author - click on any "id" in "Author ID" column</h3>
-        <h3>To edit author - click on any "name" in "Author Name" column</h3>
-
     </body>
 </html>
