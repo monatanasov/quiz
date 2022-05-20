@@ -60,7 +60,7 @@
                 }
             }
         ?>
-        <form action="createAuthor.php" method="POST">
+        <form action="create.php" method="POST">
             <h2>Create Author</h2>
             <div id="createAuthorDiv">
                 <b><label for="createAuthorName">Author name</label></b>

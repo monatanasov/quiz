@@ -62,7 +62,7 @@
                 }
             }
         ?>
-        <form action="editAuthor.php" method="POST">
+        <form action="edit.php" method="POST">
             <h2>Edit Author</h2>
             <div id="editAuthorDiv">
                 <b><label for="editAuthorName">Author name</label></b>

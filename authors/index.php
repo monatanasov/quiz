@@ -18,7 +18,7 @@
         <title>CRUD Authors</title>
     </head>
     <body>
-        <a href="./createAuthor.php">Create Author</a><br>
+        <a href="create.php">Create Author</a><br>
         <table border = "1px solid black">
             <tr>
                 <th>Author ID</th>
