@@ -44,14 +44,14 @@
             }
 
             if ($_POST) {
-                echo '<form action="./edit.php" method="POST">';
-                echo '<div class="showAuthorsDiv">';
-                echo '<h3>Author info</h3>';
-                echo '<label for="updateAuthor">Name: </label>';
-                echo '<input type="text" name="updateAuthor" id="updateAuthor" value="'.$_POST['authorName'].'">';
-                echo '<input type="text" name="authorId" value="'.$_POST['authorId'].'" readonly hidden>';
-                echo '<input type="submit" value="update">';
-                echo '</div>';
+                echo '<form action="edit.php" method="POST">';
+                    echo '<div class="showAuthorsDiv">';
+                        echo '<h3>Author info</h3>';
+                        echo '<label for="updateAuthor">Name: </label>';
+                        echo '<input type="text" name="updateAuthor" id="updateAuthor" value="'.$_POST['authorName'].'">';
+                        echo '<input type="text" name="authorId" value="'.$_POST['authorId'].'" readonly hidden>';
+                        echo '<input type="submit" value="update">';
+                    echo '</div>';
                 echo '</form>';
             }
         ?>

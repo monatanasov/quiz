@@ -7,7 +7,7 @@
         $authorName = trim($_POST['updateAuthor']);
         $authorNameLength = mb_strlen($authorName);
         $authorId = $_POST['authorId'];
-        $authorCheckQuery = "SELECT * FROM `authors` WHERE `id` = '$authorName'";
+        $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$authorName'";
         $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
 
         if (!$authorNameLength >= 1 && !$authorNameLength <=255) {
@@ -22,7 +22,7 @@
             $updateAuthorSql = "UPDATE `authors` SET `name`='$authorName' WHERE `id` = $authorId";
             mysqli_query($conn,$updateAuthorSql);
             $_SESSION['message'] = 'Your Author was successfully edited!';
-            header("Location ./index.php");
+            header("location: ./index.php");
         } else {
             //$editableAuthorName = $authorName;
             foreach ($_SESSION['message'] as $error) {
