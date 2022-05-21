@@ -43,20 +43,15 @@
             }
 
             if ($_POST) {
+                echo '<form action="edit.php" method="POST">';
                 echo '<div class="showAuthorsDiv">';
                 echo '<h3>Author info</h3>';
                 echo '<label for="updateAuthor">Name: </label>';
                 echo '<input type="text" name="updateAuthor" id="updateAuthor" value="'.$_POST['authorName'].'">';
-                echo '</div>';
-
-                echo '<form action="edit.php" method="POST">';
-                echo '<input type="text" name="secondPostAuthorName" value="'.$authorName.'" readonly hidden>';
                 echo '<input type="submit" value="update">';
+                echo '</div>';
                 echo '</form>';
             }
-
-
-        echo '<pre>' . print_r($_POST, true) . '</pre>';
         ?>
     </body>
 </html>
