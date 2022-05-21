@@ -25,9 +25,6 @@
             header("location: ./index.php");
         } else {
             //$editableAuthorName = $authorName;
-            foreach ($_SESSION['message'] as $error) {
-                echo $error;
-            }
             header("location: ./show.php");
         }
     }

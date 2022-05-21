@@ -54,6 +54,13 @@
                     echo '</div>';
                 echo '</form>';
             }
+
+            if (isset($_SESSION['message'])) {
+                $errors[] = $_SESSION['message'];
+                foreach ($errors as $error) {
+                    echo $error;
+                }
+            }
         ?>
     </body>
 </html>
