@@ -3,6 +3,9 @@
     session_start();
     include '../dbconn.php';
     mb_internal_encoding("UTF-8");
+
+echo '<pre>' . print_r($_POST, true) . '</pre>';
+    
 ?>
 <html lang="en">
     <head>
