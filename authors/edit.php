@@ -1,36 +1,36 @@
 <?php
-echo '<pre>' . print_r($_POST, true) . '</pre>';
-    if ($_POST) {
-        $errors = [];
-        $postAuthorName = trim($_POST['updateAuthor']);
-        $authorNameLength = mb_strlen($postAuthorName);
-        $authorId = $_SESSION['editableAuthorId'];     // TODO: PASS ID
+    session_start();
+    include '../dbconn.php';
+    mb_internal_encoding("UTF-8");
 
-        $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$postAuthorName'";
+    echo '<pre>' . print_r($_POST, true) . '</pre>';
+
+    if ($_POST) {
+        $authorName = trim($_POST['updateAuthor']);
+        $authorNameLength = mb_strlen($authorName);
+        $authorId = $_POST['authorId'];
+        $authorCheckQuery = "SELECT * FROM `authors` WHERE `id` = '$authorName'";
         $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
 
         if (!$authorNameLength >= 1 && !$authorNameLength <=255) {
-            $errors[] =  'Author name must be between 1 and 255 characters long!' . '<br>';
+            $_SESSION['message'] =  'Author name must be between 1 and 255 characters long!' . '<br>';
         }
 
         if (mysqli_num_rows($authorCheckResult) >= 1) {
-            $errors[] = 'This Author already exists!' . '<br>';
+            $_SESSION['message'] = 'This Author already exists!' . '<br>';
         }
 
-        if (empty($errors)) {
-            $updateAuthorSql = "UPDATE `authors` SET `name`='$postAuthorName' WHERE `id` = $authorId";
+        if (empty($_SESSION['message'])) {
+            $updateAuthorSql = "UPDATE `authors` SET `name`='$authorName' WHERE `id` = $authorId";
             mysqli_query($conn,$updateAuthorSql);
-            echo 'Your Author was successfully edited!';
-
-            if (mysqli_error($conn)) {
-                echo 'No database connection in editAuthor page';
-                exit;
-            }
+            $_SESSION['message'] = 'Your Author was successfully edited!';
+            header("Location ./index.php");
         } else {
-            $editableAuthorName = $postAuthorName;
-            foreach ($errors as $error) {
+            //$editableAuthorName = $authorName;
+            foreach ($_SESSION['message'] as $error) {
                 echo $error;
             }
+            header("location: ./show.php");
         }
     }
 ?>

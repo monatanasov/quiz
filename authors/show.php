@@ -37,17 +37,19 @@
 
                     echo '<form action="show.php" method="POST">';
                         echo '<input type="text" name="authorName" value="'.$authorName.'" readonly hidden>';
+                        echo '<input type="text" name="authorId" value="'.$intGetAuthorId.'" readonly hidden>';
                         echo '<input type="submit" value="update">';
                     echo '</form>';
                 }
             }
 
             if ($_POST) {
-                echo '<form action="edit.php" method="POST">';
+                echo '<form action="./edit.php" method="POST">';
                 echo '<div class="showAuthorsDiv">';
                 echo '<h3>Author info</h3>';
                 echo '<label for="updateAuthor">Name: </label>';
                 echo '<input type="text" name="updateAuthor" id="updateAuthor" value="'.$_POST['authorName'].'">';
+                echo '<input type="text" name="authorId" value="'.$_POST['authorId'].'" readonly hidden>';
                 echo '<input type="submit" value="update">';
                 echo '</div>';
                 echo '</form>';
