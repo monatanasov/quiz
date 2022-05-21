@@ -3,8 +3,6 @@
     include '../dbconn.php';
     mb_internal_encoding("UTF-8");
 
-    echo '<pre>' . print_r($_POST, true) . '</pre>';
-
     if ($_POST) {
         $authorName = trim($_POST['updateAuthor']);
         $authorNameLength = mb_strlen($authorName);
@@ -13,7 +11,7 @@
         $authorCheckResult = mysqli_query($conn,$authorCheckQuery);
 
         if (!$authorNameLength >= 1 && !$authorNameLength <=255) {
-            $_SESSION['message'] =  'Author name must be between 1 and 255 characters long!' . '<br>';
+            $_SESSION['message'] = 'Author name must be between 1 and 255 characters long!' . '<br>';
         }
 
         if (mysqli_num_rows($authorCheckResult) >= 1) {

@@ -25,7 +25,13 @@
                 <th>Author Name</th>
             </tr>
             <?php
-                echo $_SESSION['message'];
+                if (isset($_SESSION['message'])) {
+                    $sessionMessage[] = $_SESSION['message'];
+                    session_destroy();
+                    foreach ($sessionMessage as $sessMess) {
+                        echo $sessMess;
+                    }
+                }
                 $showAllAuthorsTable = mysqli_query($conn, "SELECT * FROM `authors`");
                 while ($row = mysqli_fetch_assoc($showAllAuthorsTable)) {
                 echo '<form action="delete.php" method="POST">';
