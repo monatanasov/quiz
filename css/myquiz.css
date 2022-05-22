@@ -68,3 +68,9 @@ img {
 .showAuthorsDiv {
     margin-bottom: 1%;
 }
+table, th, td {
+    border: 1px solid black;
+}
+.hiddenTd {
+    border: none;
+}
