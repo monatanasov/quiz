@@ -53,8 +53,6 @@
                         echo '<input type="submit" value="update">';
                     echo '</div>';
                 echo '</form>';
-
-                echo '<pre>' . print_r($_POST, true) . '</pre>';
             }
 
             if (isset($_SESSION['post'])) {

@@ -28,20 +28,22 @@
                 if (isset($_SESSION['message'])) {
                     $sessionMessage[] = $_SESSION['message'];
                     session_destroy();
-                    foreach ($sessionMessage as $sessMess) {
-                        echo $sessMess;
+                    foreach ($sessionMessage as $message) {
+                        echo $message;
                     }
                 }
-                $showAllAuthorsTable = mysqli_query($conn, "SELECT * FROM `authors`");
-                while ($row = mysqli_fetch_assoc($showAllAuthorsTable)) {
-                    echo '<form action="delete.php" method="POST">';
-                        echo '<tr>
-                                 <td><a href="./show.php?id='.$row['id'].'">'.$row['id'].'</a></td>
-                                 <td><a href="./show.php?id='.$row['id'].'">'.$row['name'].'</a></td>';
-                        echo '<td><input type="text" name="authorId" value="'.$row['id'].'" readonly hidden></td>';
-                        echo '<td><input type="submit" class="deleteAuthor" value="delete"></td>';
-                        echo '</tr>';
-                    echo '</form>';
+                $allAuthorsTable = mysqli_query($conn, "SELECT * FROM `authors`");
+                if (mysqli_num_rows($allAuthorsTable) > 0) {
+                    while ($row = mysqli_fetch_assoc($allAuthorsTable)) {
+                        echo '<form action="delete.php" method="POST">';
+                            echo '<tr>
+                                     <td><a href="./show.php?id='.$row['id'].'">'.$row['id'].'</a></td>
+                                     <td><a href="./show.php?id='.$row['id'].'">'.$row['name'].'</a></td>';
+                            echo '<td><input type="text" name="authorId" value="'.$row['id'].'" readonly hidden></td>';
+                            echo '<td><input type="submit" class="deleteAuthor" value="delete"></td>';
+                            echo '</tr>';
+                        echo '</form>';
+                    }
                 }
             ?>
         </table>

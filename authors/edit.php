@@ -3,8 +3,6 @@
     include '../dbconn.php';
     mb_internal_encoding("UTF-8");
 
-
-
     if ($_POST) {
         $authorName = trim($_POST['authorName']);
         $authorNameLength = mb_strlen($authorName);
