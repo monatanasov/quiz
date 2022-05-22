@@ -38,7 +38,7 @@
                     echo '<form action="show.php" method="POST">';
                         echo '<input type="text" name="authorName" value="'.$authorName.'" readonly hidden>';
                         echo '<input type="text" name="authorId" value="'.$intGetAuthorId.'" readonly hidden>';
-                        echo '<input type="submit" value="update">';
+                        echo '<input type="submit" value="edit">';
                     echo '</form>';
                 }
             }
