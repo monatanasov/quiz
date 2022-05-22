@@ -3,8 +3,10 @@
     include '../dbconn.php';
     mb_internal_encoding("UTF-8");
 
+
+
     if ($_POST) {
-        $authorName = trim($_POST['updateAuthor']);
+        $authorName = trim($_POST['authorName']);
         $authorNameLength = mb_strlen($authorName);
         $authorId = $_POST['authorId'];
         $authorCheckQuery = "SELECT * FROM `authors` WHERE `name` = '$authorName'";
@@ -25,6 +27,7 @@
             header("location: ./index.php");
         } else {
             //$editableAuthorName = $authorName;
+            $_SESSION['post'] = $_POST;
             header("location: ./show.php");
         }
     }

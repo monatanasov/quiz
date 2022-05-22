@@ -47,12 +47,28 @@
                 echo '<form action="edit.php" method="POST">';
                     echo '<div class="showAuthorsDiv">';
                         echo '<h3>Author info</h3>';
-                        echo '<label for="updateAuthor">Name: </label>';
-                        echo '<input type="text" name="updateAuthor" id="updateAuthor" value="'.$_POST['authorName'].'">';
+                        echo '<label for="authorName">Name: </label>';
+                        echo '<input type="text" name="authorName" id="authorName" value="'.$_POST['authorName'].'">';
                         echo '<input type="text" name="authorId" value="'.$_POST['authorId'].'" readonly hidden>';
                         echo '<input type="submit" value="update">';
                     echo '</div>';
                 echo '</form>';
+
+                echo '<pre>' . print_r($_POST, true) . '</pre>';
+            }
+
+            if (isset($_SESSION['post'])) {
+                $_POST = $_SESSION['post'];
+                echo '<form action="edit.php" method="POST">';
+                    echo '<div class="showAuthorsDiv">';
+                        echo '<h3>Author info</h3>';
+                        echo '<label for="authorName">Name: </label>';
+                        echo '<input type="text" name="authorName" id="authorName" value="'.$_POST['authorName'].'">';
+                        echo '<input type="text" name="authorId" value="'.$_POST['authorId'].'" readonly hidden>';
+                        echo '<input type="submit" value="update">';
+                    echo '</div>';
+                echo '</form>';
+                session_destroy();
             }
 
             if (isset($_SESSION['message'])) {
